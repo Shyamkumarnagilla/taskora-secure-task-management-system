@@ -1,0 +1,11 @@
+# Maven
+backend/target/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+
+# Environment
+.env
