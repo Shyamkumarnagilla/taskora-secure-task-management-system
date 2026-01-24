@@ -33,3 +33,33 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     alert("❌ Registration Failed!");
   }
 });
+
+// Login API integration
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPassword").value;
+
+  const response = await fetch("http://localhost:8081/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+
+    // ✅ Store JWT token
+    localStorage.setItem("taskora_token", data.token);
+
+    alert("✅ Login Successful!");
+
+    // ✅ Redirect to Dashboard
+    window.location.href = "dashboard.html";
+  } else {
+    alert("❌ Invalid Email or Password");
+  }
+});
