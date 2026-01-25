@@ -1,5 +1,6 @@
 package com.taskora.backend.controller;
 
+import com.taskora.backend.dto.TaskRequest;
 import com.taskora.backend.entity.Task;
 import com.taskora.backend.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,8 @@ public class TaskController {
 
     // ✅ Create new task
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        return ResponseEntity.ok(taskService.createTask(task));
+    public ResponseEntity<Task> createTask(@RequestBody TaskRequest request) {
+        return ResponseEntity.ok(taskService.createTask(request));
     }
 
     // ✅ Get tasks for a user

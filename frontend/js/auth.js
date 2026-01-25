@@ -54,6 +54,8 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
     // ✅ Store JWT token
     localStorage.setItem("taskora_token", data.token);
+    localStorage.setItem("taskora_email", data.email);
+    window.location.href = "dashboard.html";
 
     alert("✅ Login Successful!");
 

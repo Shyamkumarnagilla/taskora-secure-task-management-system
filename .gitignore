@@ -9,3 +9,4 @@ backend/target/
 
 # Environment
 .env
+backend/.env
