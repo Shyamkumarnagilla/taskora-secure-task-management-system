@@ -10,20 +10,17 @@ if (!token || !email) {
 // ✅ Extract Name from Email
 const name = email.split("@")[0];
 
-// ✅ Show Email in Menu (Gmail Style)
+// ✅ Profile Icon + Greeting + Email
 document.getElementById("menuEmail").innerText = email;
 
-// ✅ Profile Icon Letter
 document.getElementById("profileIcon").innerText =
   name.charAt(0).toUpperCase();
 
 document.getElementById("profileAvatar").innerText =
   name.charAt(0).toUpperCase();
 
-// ✅ Greeting Text
 document.getElementById("profileGreeting").innerText =
   `Hi, ${name}!`;
-
 
 // ✅ Toggle Profile Dropdown
 const profileIcon = document.getElementById("profileIcon");
@@ -52,29 +49,21 @@ filterBtn.addEventListener("click", () => {
     filterMenu.style.display === "block" ? "none" : "block";
 });
 
-// ✅ Global Tasks Storage
+// ✅ Global Task Storage
 let allTasks = [];
 
-// ✅ Render Tasks Function
-function renderTasks(tasks) {
-  const taskList = document.getElementById("taskList");
-  taskList.innerHTML = "";
+// ✅ Load Tasks from Backend
+async function loadTasks() {
+  const response = await fetch(`http://localhost:8081/tasks/${email}`);
 
-  if (tasks.length === 0) {
-    taskList.innerHTML = "<p>No tasks found.</p>";
-    return;
+  if (response.ok) {
+    allTasks = await response.json();
+    updateCounts();
+    renderTasks(allTasks);
   }
-
-  tasks.forEach((task) => {
-    const div = document.createElement("div");
-    div.className = "task-card";
-    div.innerText = task.title;
-
-    taskList.appendChild(div);
-  });
 }
 
-// ✅ Update Counts Function
+// ✅ Update Filter Counts
 function updateCounts() {
   document.getElementById("allCount").innerText = allTasks.length;
 
@@ -85,7 +74,35 @@ function updateCounts() {
     allTasks.filter((t) => !t.completed).length;
 }
 
-// ✅ Filter Tasks Function (called from HTML onclick)
+// ✅ Render Tasks as Horizontal Cards
+function renderTasks(tasks) {
+  const carousel = document.getElementById("taskCarousel");
+  carousel.innerHTML = "";
+
+  tasks.forEach((task) => {
+    const card = document.createElement("div");
+    card.className = "task-card";
+
+    if (task.completed) {
+      card.classList.add("completed");
+    }
+
+    card.innerHTML = `
+      <h3>${task.title}</h3>
+
+      <div class="task-actions">
+        <button onclick="pinTask(${task.id})">📌</button>
+        <button onclick="completeTask(${task.id})">✅</button>
+        <button onclick="editTask(${task.id})">✏️</button>
+        <button onclick="deleteTask(${task.id})">🗑</button>
+      </div>
+    `;
+
+    carousel.appendChild(card);
+  });
+}
+
+// ✅ Filter Tasks Function
 function filterTasks(type) {
   if (type === "completed") {
     renderTasks(allTasks.filter((t) => t.completed));
@@ -95,55 +112,89 @@ function filterTasks(type) {
     renderTasks(allTasks);
   }
 
-  // Hide menu after click
   filterMenu.style.display = "none";
 }
 
-// ✅ Make filterTasks available globally
 window.filterTasks = filterTasks;
 
-// ✅ Load Tasks from Backend
-async function loadTasks() {
-  const response = await fetch(`http://localhost:8081/tasks/${email}`);
+// ✅ Pin Task (Move to Front)
+function pinTask(id) {
+  const task = allTasks.find((t) => t.id === id);
 
-  if (response.ok) {
-    allTasks = await response.json();
+  allTasks = allTasks.filter((t) => t.id !== id);
+  allTasks.unshift(task);
 
-    updateCounts();
-    renderTasks(allTasks);
-  } else {
-    document.getElementById("taskList").innerHTML =
-      "<p>Error loading tasks.</p>";
-  }
+  renderTasks(allTasks);
 }
 
-// ✅ Initial Load
-loadTasks();
+window.pinTask = pinTask;
 
+// ✅ Complete Task API
+async function completeTask(id) {
+  await fetch(`http://localhost:8081/tasks/${id}/complete`, {
+    method: "PUT",
+  });
 
-// ✅ ===============================
-// ✅ ChatGPT Style Task Composer
-// ✅ ===============================
+  loadTasks();
+}
 
-// Composer Elements
+window.completeTask = completeTask;
+
+// ✅ Edit Task API
+async function editTask(id) {
+  const newTitle = prompt("Update task title:");
+  if (!newTitle) return;
+
+  await fetch(
+    `http://localhost:8081/tasks/${id}/update?title=${newTitle}`,
+    {
+      method: "PUT",
+    }
+  );
+
+  loadTasks();
+}
+
+window.editTask = editTask;
+
+// ✅ Delete Task API
+async function deleteTask(id) {
+  await fetch(`http://localhost:8081/tasks/${id}`, {
+    method: "DELETE",
+  });
+
+  loadTasks();
+}
+
+window.deleteTask = deleteTask;
+
+// ✅ Scroll Buttons
+document.getElementById("scrollLeft").onclick = () => {
+  document.getElementById("taskCarousel").scrollLeft -= 300;
+};
+
+document.getElementById("scrollRight").onclick = () => {
+  document.getElementById("taskCarousel").scrollLeft += 300;
+};
+
+// ✅ Composer Elements
 const newTaskBtn = document.getElementById("newTaskBtn");
 const taskForm = document.getElementById("taskForm");
 
-// Expand / Collapse Form
+// Expand Composer
 newTaskBtn.addEventListener("click", () => {
   taskForm.style.display =
     taskForm.style.display === "block" ? "none" : "block";
 });
 
-// Submit Task
+// ✅ Submit Task from Composer
 document.getElementById("submitTaskBtn").addEventListener("click", async () => {
-
   const title = document.getElementById("taskTitleInput").value;
   const date = document.getElementById("taskDate").value;
   const time = document.getElementById("taskTime").value;
 
   if (!title) {
-    alert("Please enter a task name!");
+    alert("Please enter task title!");
     return;
   }
 
@@ -164,9 +215,10 @@ document.getElementById("submitTaskBtn").addEventListener("click", async () => {
   document.getElementById("taskDate").value = "";
   document.getElementById("taskTime").value = "";
 
-  // Close Form
   taskForm.style.display = "none";
 
-  // Reload Tasks
   loadTasks();
 });
+
+// ✅ Initial Load
+loadTasks();

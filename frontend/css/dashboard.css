@@ -9,14 +9,11 @@
 
 body {
   height: 100vh;
-  margin: 0;
   background: linear-gradient(90deg, #e2e2e2, #c9d6ff);
-  overflow: hidden; /* ✅ Prevent scrolling */
+  overflow: hidden; /* ✅ No page scroll */
 }
 
-
-
-/* ✅ Navbar */
+/* ✅ NAVBAR */
 .navbar {
   width: 100%;
   background: white;
@@ -27,7 +24,8 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
 
 .logo {
@@ -41,80 +39,36 @@ body {
   gap: 15px;
 }
 
-#userEmail {
-  font-size: 14px;
-  color: #333;
-  font-weight: 500;
-}
-
-#logoutBtn {
-  padding: 8px 15px;
-  background: #7494ec;
+/* ✅ FILTER BUTTON */
+.filter-btn {
+  background: transparent;
   border: none;
-  border-radius: 6px;
-  color: white;
+  font-size: 22px;
   cursor: pointer;
 }
 
-#logoutBtn:hover {
-  background: #5f7eea;
+.filter-menu {
+  position: absolute;
+  top: 65px;
+  right: 120px;
+  background: white;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  display: none;
 }
 
-/* ✅ Push dashboard down */
-.dashboard-container {
-  margin-top: 100px;
-}
-
-.dashboard-container {
-  background: #fff;
-  width: 420px;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-.dashboard-container h1 {
-  font-size: 32px;
-  margin-bottom: 5px;
-}
-
-.subtitle {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 25px;
-}
-
-.tasks {
-  margin-bottom: 20px;
-}
-
-.task-card {
-  background: #eee;
-  padding: 12px 15px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  text-align: left;
-}
-
-.btn {
-  width: 100%;
-  height: 45px;
-  background: #7494ec;
-  border: none;
-  border-radius: 8px;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
+.filter-menu p {
+  margin: 8px 0;
   cursor: pointer;
+  font-size: 14px;
 }
 
-.btn:hover {
-  background: #5f7eea;
+.filter-menu p:hover {
+  color: #7494ec;
 }
 
-/* ✅ Profile Icon */
+/* ✅ PROFILE ICON */
 .profile-container {
   position: relative;
 }
@@ -133,55 +87,25 @@ body {
   cursor: pointer;
 }
 
-/* ✅ Dropdown Menu */
+/* ✅ PROFILE MENU */
 .profile-menu {
   position: absolute;
   top: 55px;
   right: 0;
-  width: 180px;
+  width: 200px;
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+  padding: 15px;
   display: none;
   flex-direction: column;
-  z-index: 10;
-}
-
-.profile-menu p {
-  font-size: 13px;
-  color: #333;
-  margin: 8px 0;
-  text-align: center;
-  font-weight: 500;
-}
-
-.profile-menu hr {
-  border: none;
-  height: 1px;
-  background: #ddd;
-  margin: 8px 0;
-}
-
-.profile-menu button {
-  width: 100%;
-  padding: 8px;
-  margin: 4px 0;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background: #f2f2f2;
-  font-size: 14px;
-}
-
-.profile-menu button:hover {
-  background: #e6e6e6;
-}
-
-.profile-card {
   align-items: center;
-  text-align: center;
-  padding: 15px;
+}
+
+.profile-email {
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: #333;
 }
 
 .profile-avatar {
@@ -193,24 +117,24 @@ body {
   font-weight: 600;
   border-radius: 50%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  align-items: center;
 }
 
 .profile-greeting {
+  margin-top: 10px;
   font-size: 14px;
   font-weight: 500;
-  margin-bottom: 12px;
 }
 
 .logout-btn {
+  margin-top: 12px;
   width: 100%;
-  background: #ff4d4d;
-  color: white;
-  border: none;
   padding: 8px;
-  border-radius: 6px;
+  background: #ff4d4d;
+  border: none;
+  border-radius: 8px;
+  color: white;
   cursor: pointer;
 }
 
@@ -218,43 +142,95 @@ body {
   background: #e63e3e;
 }
 
-.filter-btn {
-  background: transparent;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  margin-right: 10px;
+/* ✅ WELCOME SECTION */
+.dashboard-container {
+  position: absolute;
+  top: 100px;
+  width: 100%;
+  text-align: center;
 }
 
-.filter-menu {
+.welcome-title {
+  font-size: 34px;
+  font-weight: 700;
+  color: #222;
+}
+
+.welcome-subtitle {
+  font-size: 16px;
+  margin-top: 10px;
+  color: #444;
+  white-space: nowrap;
+}
+
+/* ✅ TASK CAROUSEL */
+.task-carousel-container {
   position: absolute;
-  top: 65px;
-  right: 120px;
-  background: white;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  top: 220px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.task-carousel {
+  width: 75%;
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 15px;
+}
+
+.task-carousel::-webkit-scrollbar {
   display: none;
 }
 
-.filter-menu p {
-  margin: 8px 0;
+/* ✅ TASK CARD */
+.task-card {
+  min-width: 220px;
+  background: white;
+  padding: 15px;
+  border-radius: 18px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.task-card.completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+/* ✅ CARD ACTIONS */
+.task-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-actions button {
+  border: none;
+  background: transparent;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 18px;
 }
 
-.filter-menu p:hover {
-  color: #7494ec;
+/* ✅ ARROWS */
+.arrow-btn {
+  background: #7494ec;
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
-.profile-email {
-  font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 12px;
-  color: #333;
+.arrow-btn:hover {
+  background: #5f7eea;
 }
 
-/* ✅ Task Composer (ChatGPT Style) */
+/* ✅ TASK COMPOSER */
 .task-composer {
   position: fixed;
   bottom: 60px;
@@ -264,39 +240,35 @@ body {
   text-align: center;
 }
 
-/* Collapsed Button */
 .composer-btn {
   width: 100%;
   padding: 14px;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   background: #7494ec;
   color: white;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 .composer-btn:hover {
   background: #5f7eea;
 }
 
-/* Hidden Form */
 .composer-form {
   display: none;
   margin-top: 10px;
   background: white;
   padding: 15px;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-  animation: slideUp 0.3s ease;
+  border-radius: 18px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
 }
 
 .composer-form input {
   width: 100%;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: 1px solid #ccc;
   margin-bottom: 10px;
 }
@@ -310,57 +282,17 @@ body {
   flex: 1;
 }
 
-/* Submit Button */
 .submit-btn {
   width: 100%;
   padding: 12px;
-  background: #22c55e;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
+  background: #22c55e;
   color: white;
-  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
 }
 
 .submit-btn:hover {
   background: #16a34a;
-}
-
-/* Slide Up Animation */
-@keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-}
-
-.dashboard-container {
-  position: fixed;
-  top: 20px;
-  width: 100%;
-  text-align: center;
-  background: transparent;
-  box-shadow: none;
-  padding: 0;
-  border-radius: 0;
-}
-
-
-.welcome-title {
-  font-size: 34px;
-  font-weight: 700;
-  color: #333;
-}
-
-.welcome-subtitle {
-  font-size: 16px;
-  margin-top: 12px;
-  color: #555;
-  line-height: 1.6;
-  white-space: nowrap;
 }

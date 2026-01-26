@@ -1,101 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Taskora | Dashboard</title>
-    <link rel="stylesheet" href="css/dashboard.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taskora Dashboard</title>
+
+  <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 
 <body>
 
-    <body>
+  <!-- ✅ NAVBAR -->
+  <div class="navbar">
+    <h2 class="logo">Taskora</h2>
 
-        <!-- ✅ Navbar -->
-        <div class="navbar">
-            <h2 class="logo">Taskora</h2>
+    <div class="nav-right">
 
-            <div class="nav-right">
+      <!-- ✅ Filter Button -->
+      <button id="filterBtn" class="filter-btn">☰</button>
 
-                <button id="filterBtn" class="filter-btn">☰</button>
+      <!-- ✅ Filter Dropdown -->
+      <div id="filterMenu" class="filter-menu">
+        <p onclick="filterTasks('all')">
+          All Tasks (<span id="allCount">0</span>)
+        </p>
+        <p onclick="filterTasks('completed')">
+          Completed (<span id="completedCount">0</span>)
+        </p>
+        <p onclick="filterTasks('pending')">
+          Pending (<span id="pendingCount">0</span>)
+        </p>
+      </div>
 
-                <div id="filterMenu" class="filter-menu">
-                    <p onclick="filterTasks('all')">All Tasks (<span id="allCount">0</span>)</p>
-                    <p onclick="filterTasks('completed')">Completed (<span id="completedCount">0</span>)</p>
-                    <p onclick="filterTasks('pending')">Pending (<span id="pendingCount">0</span>)</p>
-                </div>
+      <!-- ✅ Profile Icon + Dropdown -->
+      <div class="profile-container">
+        <div id="profileIcon" class="profile-icon">S</div>
 
-                <!-- ✅ Profile Circle -->
-                <!-- ✅ Profile Circle + Dropdown -->
-                <div class="profile-container">
+        <div id="profileMenu" class="profile-menu profile-card">
 
-                    <!-- ✅ Profile Icon Always Visible -->
-                    <div id="profileIcon" class="profile-icon">S</div>
+          <!-- ✅ Email -->
+          <p class="profile-email" id="menuEmail"></p>
 
-                    <!-- ✅ Dropdown Menu -->
-                    <div id="profileMenu" class="profile-menu profile-card">
+          <!-- ✅ Logo -->
+          <div class="profile-avatar" id="profileAvatar">S</div>
 
-                        <!-- ✅ Email at Top -->
-                        <p class="profile-email" id="menuEmail"></p>
+          <!-- ✅ Greeting -->
+          <p class="profile-greeting" id="profileGreeting">Hi, User!</p>
 
-                        <!-- ✅ Logo Circle -->
-                        <div class="profile-avatar" id="profileAvatar">S</div>
-
-                        <!-- ✅ Greeting -->
-                        <p class="profile-greeting" id="profileGreeting">Hi, User!</p>
-
-                        <!-- ✅ Logout Only -->
-                        <button id="logoutBtn" class="logout-btn">Logout</button>
-
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
+          <!-- ✅ Logout -->
+          <button id="logoutBtn" class="logout-btn">Logout</button>
         </div>
+      </div>
 
-        <!-- ✅ Dashboard Container -->
-        <div class="dashboard-container">
+    </div>
+  </div>
 
-            <h1 class="welcome-title">Welcome to Taskora</h1>
-            <p class="welcome-subtitle">
-                Your Secure Task Management System.<br>
-                Add tasks, track progress, and stay productive.
-            </p>
+  <!-- ✅ WELCOME SECTION -->
+  <div class="dashboard-container">
+    <h1 class="welcome-title">Welcome to Taskora</h1>
+    <p class="welcome-subtitle">
+      Your Secure Task Management System. <br> 
+      Add tasks, track progress, and stay productive.
+    </p>
+  </div>
 
-            <!-- ✅ Task Composer -->
-            <div class="task-composer" id="taskComposer">
+  <!-- ✅ TASK CAROUSEL -->
+  <div class="task-carousel-container">
 
-                <!-- Collapsed Button -->
-                <button class="composer-btn" id="newTaskBtn">
-                    + New Task
-                </button>
+    <button class="arrow-btn" id="scrollLeft">◀</button>
 
-                <!-- Expanded Input Form -->
-                <div class="composer-form" id="taskForm">
+    <div class="task-carousel" id="taskCarousel">
+      <!-- Tasks load dynamically -->
+    </div>
 
-                    <input type="text" id="taskTitleInput" placeholder="Enter task" />
+    <button class="arrow-btn" id="scrollRight">▶</button>
 
-                    <div class="datetime-row">
-                        <input type="date" id="taskDate" />
-                        <input type="time" id="taskTime" />
-                    </div>
+  </div>
 
-                    <button class="submit-btn" id="submitTaskBtn">
-                        Add Task
-                    </button>
+  <!-- ✅ TASK COMPOSER (CHATGPT STYLE) -->
+  <div class="task-composer" id="taskComposer">
 
-                </div>
-            </div>
+    <!-- Collapsed -->
+    <button class="composer-btn" id="newTaskBtn">
+      + New Task
+    </button>
 
-        </div>
+    <!-- Expanded -->
+    <div class="composer-form" id="taskForm">
 
-        <script src="js/dashboard.js"></script>
-    </body>
+      <input type="text" id="taskTitleInput" placeholder="Enter task name..." />
+
+      <div class="datetime-row">
+        <input type="date" id="taskDate" />
+        <input type="time" id="taskTime" />
+      </div>
+
+      <button class="submit-btn" id="submitTaskBtn">
+        Add Task
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ✅ JS -->
+  <script src="js/dashboard.js"></script>
 
 </body>
-
 </html>
