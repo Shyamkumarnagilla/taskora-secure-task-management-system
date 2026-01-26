@@ -8,12 +8,13 @@
 }
 
 body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100vh;
+  margin: 0;
   background: linear-gradient(90deg, #e2e2e2, #c9d6ff);
+  overflow: hidden; /* ✅ Prevent scrolling */
 }
+
+
 
 /* ✅ Navbar */
 .navbar {
@@ -251,4 +252,115 @@ body {
   font-weight: 500;
   margin-bottom: 12px;
   color: #333;
+}
+
+/* ✅ Task Composer (ChatGPT Style) */
+.task-composer {
+  position: fixed;
+  bottom: 60px;
+  width: 420px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+/* Collapsed Button */
+.composer-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #7494ec;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.composer-btn:hover {
+  background: #5f7eea;
+}
+
+/* Hidden Form */
+.composer-form {
+  display: none;
+  margin-top: 10px;
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  animation: slideUp 0.3s ease;
+}
+
+.composer-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.datetime-row {
+  display: flex;
+  gap: 10px;
+}
+
+.datetime-row input {
+  flex: 1;
+}
+
+/* Submit Button */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: #22c55e;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background: #16a34a;
+}
+
+/* Slide Up Animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.dashboard-container {
+  position: fixed;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+
+.welcome-title {
+  font-size: 34px;
+  font-weight: 700;
+  color: #333;
+}
+
+.welcome-subtitle {
+  font-size: 16px;
+  margin-top: 12px;
+  color: #555;
+  line-height: 1.6;
+  white-space: nowrap;
 }

@@ -60,31 +60,36 @@
         <!-- ✅ Dashboard Container -->
         <div class="dashboard-container">
 
-            <p class="subtitle">Secure Task Management System</p>
+            <h1 class="welcome-title">Welcome to Taskora</h1>
+            <p class="welcome-subtitle">
+                Your Secure Task Management System.<br>
+                Add tasks, track progress, and stay productive.
+            </p>
 
-            <!-- ✅ Task Stats -->
-            <div class="stats">
-                <div class="stat-card">
-                    <h3 id="totalTasks">0</h3>
-                    <p>Total Tasks</p>
-                </div>
-                <div class="stat-card">
-                    <h3 id="completedTasks">0</h3>
-                    <p>Completed</p>
-                </div>
-                <div class="stat-card">
-                    <h3 id="pendingTasks">0</h3>
-                    <p>Pending</p>
+            <!-- ✅ Task Composer -->
+            <div class="task-composer" id="taskComposer">
+
+                <!-- Collapsed Button -->
+                <button class="composer-btn" id="newTaskBtn">
+                    + New Task
+                </button>
+
+                <!-- Expanded Input Form -->
+                <div class="composer-form" id="taskForm">
+
+                    <input type="text" id="taskTitleInput" placeholder="Enter task" />
+
+                    <div class="datetime-row">
+                        <input type="date" id="taskDate" />
+                        <input type="time" id="taskTime" />
+                    </div>
+
+                    <button class="submit-btn" id="submitTaskBtn">
+                        Add Task
+                    </button>
+
                 </div>
             </div>
-
-            <!-- ✅ Task List -->
-            <div class="tasks" id="taskList">
-                <p>Loading tasks...</p>
-            </div>
-
-            <!-- ✅ Add Task Button -->
-            <button class="btn" id="addTaskBtn">Add New Task</button>
 
         </div>
 

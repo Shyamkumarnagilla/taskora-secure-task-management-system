@@ -117,11 +117,35 @@ async function loadTasks() {
   }
 }
 
-// ✅ Add Task Button
-document.getElementById("addTaskBtn").addEventListener("click", async () => {
-  const title = prompt("Enter task title:");
+// ✅ Initial Load
+loadTasks();
 
-  if (!title) return;
+
+// ✅ ===============================
+// ✅ ChatGPT Style Task Composer
+// ✅ ===============================
+
+// Composer Elements
+const newTaskBtn = document.getElementById("newTaskBtn");
+const taskForm = document.getElementById("taskForm");
+
+// Expand / Collapse Form
+newTaskBtn.addEventListener("click", () => {
+  taskForm.style.display =
+    taskForm.style.display === "block" ? "none" : "block";
+});
+
+// Submit Task
+document.getElementById("submitTaskBtn").addEventListener("click", async () => {
+
+  const title = document.getElementById("taskTitleInput").value;
+  const date = document.getElementById("taskDate").value;
+  const time = document.getElementById("taskTime").value;
+
+  if (!title) {
+    alert("Please enter a task name!");
+    return;
+  }
 
   await fetch("http://localhost:8081/tasks", {
     method: "POST",
@@ -130,13 +154,19 @@ document.getElementById("addTaskBtn").addEventListener("click", async () => {
     },
     body: JSON.stringify({
       title: title,
-      description: "Added from dashboard",
+      description: `Complete by ${date} ${time}`,
       userEmail: email,
     }),
   });
 
+  // Reset Form
+  document.getElementById("taskTitleInput").value = "";
+  document.getElementById("taskDate").value = "";
+  document.getElementById("taskTime").value = "";
+
+  // Close Form
+  taskForm.style.display = "none";
+
+  // Reload Tasks
   loadTasks();
 });
-
-// ✅ Initial Load
-loadTasks();
