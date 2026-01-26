@@ -1,23 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Taskora | Dashboard</title>
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
+
 <body>
 
-<div class="dashboard-container">
-    <h1>Taskora</h1>
-    <p class="subtitle">Secure Task Management System</p>
+    <body>
 
-    <div class="tasks" id="taskList">
-        <p>Loading tasks...</p>
-    </div>
+        <!-- ✅ Navbar -->
+        <div class="navbar">
+            <h2 class="logo">Taskora</h2>
 
-    <button class="btn" id="addTaskBtn">Add New Task</button>
-</div>
+            <div class="nav-right">
 
-<script src="js/dashboard.js"></script>
+                <button id="filterBtn" class="filter-btn">☰</button>
+
+                <div id="filterMenu" class="filter-menu">
+                    <p onclick="filterTasks('all')">All Tasks (<span id="allCount">0</span>)</p>
+                    <p onclick="filterTasks('completed')">Completed (<span id="completedCount">0</span>)</p>
+                    <p onclick="filterTasks('pending')">Pending (<span id="pendingCount">0</span>)</p>
+                </div>
+
+                <!-- ✅ Profile Circle -->
+                <!-- ✅ Profile Circle + Dropdown -->
+                <div class="profile-container">
+
+                    <!-- ✅ Profile Icon Always Visible -->
+                    <div id="profileIcon" class="profile-icon">S</div>
+
+                    <!-- ✅ Dropdown Menu -->
+                    <div id="profileMenu" class="profile-menu profile-card">
+
+                        <!-- ✅ Email at Top -->
+                        <p class="profile-email" id="menuEmail"></p>
+
+                        <!-- ✅ Logo Circle -->
+                        <div class="profile-avatar" id="profileAvatar">S</div>
+
+                        <!-- ✅ Greeting -->
+                        <p class="profile-greeting" id="profileGreeting">Hi, User!</p>
+
+                        <!-- ✅ Logout Only -->
+                        <button id="logoutBtn" class="logout-btn">Logout</button>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+        <!-- ✅ Dashboard Container -->
+        <div class="dashboard-container">
+
+            <p class="subtitle">Secure Task Management System</p>
+
+            <!-- ✅ Task Stats -->
+            <div class="stats">
+                <div class="stat-card">
+                    <h3 id="totalTasks">0</h3>
+                    <p>Total Tasks</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="completedTasks">0</h3>
+                    <p>Completed</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="pendingTasks">0</h3>
+                    <p>Pending</p>
+                </div>
+            </div>
+
+            <!-- ✅ Task List -->
+            <div class="tasks" id="taskList">
+                <p>Loading tasks...</p>
+            </div>
+
+            <!-- ✅ Add Task Button -->
+            <button class="btn" id="addTaskBtn">Add New Task</button>
+
+        </div>
+
+        <script src="js/dashboard.js"></script>
+    </body>
+
 </body>
+
 </html>
