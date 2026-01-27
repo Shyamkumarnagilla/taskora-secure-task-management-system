@@ -1,109 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Taskora Dashboard</title>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 
 <body>
 
-  <!-- ✅ NAVBAR -->
-  <div class="navbar">
-    <h2 class="logo">Taskora</h2>
+  <!-- ✅ Sidebar -->
+  <aside class="sidebar">
 
-    <div class="nav-right">
+    <!-- App Brand -->
+    <div class="brand">
+      <h2>Taskora</h2>
+    </div>
 
-      <!-- ✅ Filter Button -->
-      <button id="filterBtn" class="filter-btn">☰</button>
+    <div class="divider"></div>
 
-      <!-- ✅ Filter Dropdown -->
-      <div id="filterMenu" class="filter-menu">
-        <p onclick="filterTasks('all')">
-          All Tasks (<span id="allCount">0</span>)
-        </p>
-        <p onclick="filterTasks('completed')">
-          Completed (<span id="completedCount">0</span>)
-        </p>
-        <p onclick="filterTasks('pending')">
-          Pending (<span id="pendingCount">0</span>)
-        </p>
+    <!-- Menu -->
+    <nav class="menu">
+
+      <a href="#" class="nav-link active" data-section="dashboard">
+        <i class="icon fa-solid fa-house"></i>
+        Dashboard
+      </a>
+
+      <a href="#" class="nav-link" data-section="mytasks">
+        <i class="icon fa-solid fa-list-check"></i>
+        My Tasks
+      </a>
+
+      <a href="#" class="nav-link" data-section="track">
+        <i class="icon fa-solid fa-chart-line"></i>
+        Track Tasks
+      </a>
+
+    </nav>
+
+
+    <!-- Bottom Controls -->
+    <div class="bottom-controls">
+
+      <!-- ✅ Dark/Light Switch -->
+      <div class="mode-toggle">
+
+        <span id="lightMode" class="active">
+          <i class="fa-solid fa-sun toggle-icon"></i> Light
+        </span>
+
+        <span id="darkMode">
+          <i class="fa-solid fa-moon toggle-icon"></i> Dark
+        </span>
+
+
       </div>
 
-      <!-- ✅ Profile Icon + Dropdown -->
-      <div class="profile-container">
+      <!-- ✅ Logout -->
+      <button id="logoutBtn" class="logout-btn">Logout</button>
+
+    </div>
+  </aside>
+
+  <!-- ✅ Main Content -->
+  <main class="main">
+
+    <!-- ✅ Topbar -->
+    <header class="topbar">
+      <input id="searchBox" class="search-box" placeholder="Search tasks..." />
+
+      <div class="actions">
+        <button id="newTaskBtn" class="new-btn">+ New task</button>
+
+        <!-- ✅ Profile Icon Violet -->
         <div id="profileIcon" class="profile-icon">S</div>
-
-        <div id="profileMenu" class="profile-menu profile-card">
-
-          <!-- ✅ Email -->
-          <p class="profile-email" id="menuEmail"></p>
-
-          <!-- ✅ Logo -->
-          <div class="profile-avatar" id="profileAvatar">S</div>
-
-          <!-- ✅ Greeting -->
-          <p class="profile-greeting" id="profileGreeting">Hi, User!</p>
-
-          <!-- ✅ Logout -->
-          <button id="logoutBtn" class="logout-btn">Logout</button>
-        </div>
       </div>
+    </header>
 
-    </div>
-  </div>
-
-  <!-- ✅ WELCOME SECTION -->
-  <div class="dashboard-container">
-    <h1 class="welcome-title">Welcome to Taskora</h1>
-    <p class="welcome-subtitle">
-      Your Secure Task Management System. <br> 
-      Add tasks, track progress, and stay productive.
-    </p>
-  </div>
-
-  <!-- ✅ TASK CAROUSEL -->
-  <div class="task-carousel-container">
-
-    <button class="arrow-btn" id="scrollLeft">◀</button>
-
-    <div class="task-carousel" id="taskCarousel">
-      <!-- Tasks load dynamically -->
+    <!-- ✅ Profile Dropdown -->
+    <div id="profileMenu" class="profile-menu">
+      <p id="menuEmail"></p>
+      <div class="avatar" id="profileAvatar">S</div>
+      <p id="profileGreeting"></p>
     </div>
 
-    <button class="arrow-btn" id="scrollRight">▶</button>
+    <!-- ✅ Page Sections -->
 
-  </div>
+    <!-- Dashboard -->
+    <section id="dashboardSection" class="page-section active-section">
+      <h2>Welcome to Taskora 👋</h2>
+      <p>Your secure productivity dashboard.</p>
+    </section>
 
-  <!-- ✅ TASK COMPOSER (CHATGPT STYLE) -->
-  <div class="task-composer" id="taskComposer">
-
-    <!-- Collapsed -->
-    <button class="composer-btn" id="newTaskBtn">
-      + New Task
-    </button>
-
-    <!-- Expanded -->
-    <div class="composer-form" id="taskForm">
-
-      <input type="text" id="taskTitleInput" placeholder="Enter task name..." />
-
-      <div class="datetime-row">
-        <input type="date" id="taskDate" />
-        <input type="time" id="taskTime" />
+    <!-- My Tasks -->
+    <section id="mytasksSection" class="page-section">
+      <h2>My Tasks</h2>
+      <div class="task-box" id="taskList">
+        <!-- Tasks load here -->
       </div>
+    </section>
 
-      <button class="submit-btn" id="submitTaskBtn">
-        Add Task
-      </button>
+    <!-- Track Tasks -->
+    <section id="trackSection" class="page-section">
+      <h2>Track Tasks</h2>
+      <p>Task analytics & progress will appear here.</p>
+    </section>
 
-    </div>
-  </div>
+  </main>
 
-  <!-- ✅ JS -->
   <script src="js/dashboard.js"></script>
-
 </body>
+
 </html>

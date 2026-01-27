@@ -1,298 +1,268 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+:root {
+  --bg: #f7f7f7;
+  --card: #ffffff;
+  --text: #222;
+  --muted: #666;
+  --primary: #ffbf00;
+  --border: #eaeaea;
+}
+
+/* ✅ Dark Mode */
+body.dark {
+  --bg: #181818;
+  --card: #242424;
+  --text: #f1f1f1;
+  --muted: #aaa;
+  --border: #333;
+}
 
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
 
 body {
+  display: flex;
   height: 100vh;
-  background: linear-gradient(90deg, #e2e2e2, #c9d6ff);
-  overflow: hidden; /* ✅ No page scroll */
+  background: var(--bg);
+  overflow: hidden;
 }
 
-/* ✅ NAVBAR */
-.navbar {
-  width: 100%;
-  background: white;
-  padding: 15px 40px;
+/* ✅ Sidebar */
+.sidebar {
+  width: 240px;
+  background: var(--card);
+  margin: 20px;
+  padding: 25px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 18px 0;
+}
+
+/* ✅ Sidebar Icons */
+.icon {
+  font-size: 18px;
+  margin-right: 12px;
+  color: black; /* Light Mode */
+  transition: 0.3s;
+}
+
+/* ✅ Dark Mode Icons */
+body.dark .icon {
+  color: white; /* Dark Mode */
+}
+
+/* ✅ Active icon follows text color automatically */
+.menu a.active .icon {
+  color: inherit !important;
+}
+
+
+/* ✅ Menu */
+.menu a {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 14px;
+  text-decoration: none;
+  margin-bottom: 10px;
+  color: var(--muted);
+}
+
+.menu a:hover {
+  background: var(--bg);
+}
+
+.menu a.active {
+  background: var(--primary);
+  font-weight: 700;
+  color: #000; /* Light Mode */
+}
+
+/* ✅ Dark Mode Active Menu Text */
+body.dark .menu a.active {
+  color: #fff; /* White text */
+}
+
+/* ✅ Bottom Controls */
+.bottom-controls {
+  margin-top: auto;
+}
+
+.mode-toggle {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  z-index: 100;
+  background: var(--bg);
+  border-radius: 14px;
+  padding: 8px;
+  margin-bottom: 15px;
 }
 
-.logo {
-  color: #7494ec;
+.mode-toggle span {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.mode-toggle .active {
+  background: var(--primary);
   font-weight: 700;
+  color: #000;
 }
 
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+/* ✅ Dark mode toggle active text */
+body.dark .mode-toggle .active {
+  color: #fff;
 }
 
-/* ✅ FILTER BUTTON */
-.filter-btn {
-  background: transparent;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
+
+/* ✅ Mode Toggle Icons Follow Text */
+.toggle-icon {
+  margin-right: 6px;
+  font-size: 16px;
+  color: inherit;
 }
 
-.filter-menu {
-  position: absolute;
-  top: 65px;
-  right: 120px;
-  background: white;
+/* ✅ Logout Button */
+.logout-btn {
+  width: 100%;
   padding: 12px;
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  display: none;
-}
-
-.filter-menu p {
-  margin: 8px 0;
+  border: none;
+  border-radius: 14px;
+  background: #a67c00;
+  color: white;
   cursor: pointer;
-  font-size: 14px;
 }
 
-.filter-menu p:hover {
-  color: #7494ec;
-}
-
-/* ✅ PROFILE ICON */
-.profile-container {
+/* ✅ Main Content */
+.main {
+  flex: 1;
+  margin: 20px;
+  background: var(--card);
+  border-radius: 20px;
+  padding: 25px;
+  overflow-y: auto;
   position: relative;
 }
 
+/* ✅ Topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-box {
+  width: 320px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* ✅ New Task Button */
+.new-btn {
+  padding: 10px 18px;
+  border-radius: 14px;
+  border: none;
+  background: var(--primary);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ✅ Profile Icon Violet Both Modes */
 .profile-icon {
   width: 40px;
   height: 40px;
-  background: #7494ec;
-  color: white;
-  font-weight: 600;
-  font-size: 18px;
   border-radius: 50%;
+  background: #a67c00;
+  color: white;
+  font-weight: 700;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 }
 
-/* ✅ PROFILE MENU */
+/* ✅ Glossy Profile Menu */
 .profile-menu {
   position: absolute;
-  top: 55px;
-  right: 0;
-  width: 200px;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
-  padding: 15px;
+  top: 80px;
+  right: 40px;
+  width: 230px;
+  padding: 18px;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+
   display: none;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
+  z-index: 999;
 }
 
-.profile-email {
-  font-size: 13px;
-  margin-bottom: 10px;
-  color: #333;
+/* ✅ Dark Mode Glossy Menu */
+body.dark .profile-menu {
+  background: rgba(30, 30, 30, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.profile-avatar {
+/* ✅ Avatar */
+.avatar {
   width: 60px;
   height: 60px;
-  background: #7494ec;
-  color: white;
-  font-size: 24px;
-  font-weight: 600;
+  margin: 10px auto;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.profile-greeting {
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.logout-btn {
-  margin-top: 12px;
-  width: 100%;
-  padding: 8px;
-  background: #ff4d4d;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-}
-
-.logout-btn:hover {
-  background: #e63e3e;
-}
-
-/* ✅ WELCOME SECTION */
-.dashboard-container {
-  position: absolute;
-  top: 100px;
-  width: 100%;
-  text-align: center;
-}
-
-.welcome-title {
-  font-size: 34px;
+  background: #a67c00;
   font-weight: 700;
-  color: #222;
-}
-
-.welcome-subtitle {
-  font-size: 16px;
-  margin-top: 10px;
-  color: #444;
-  white-space: nowrap;
-}
-
-/* ✅ TASK CAROUSEL */
-.task-carousel-container {
-  position: absolute;
-  top: 220px;
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
 }
 
-.task-carousel {
-  width: 75%;
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 15px;
-}
-
-.task-carousel::-webkit-scrollbar {
+/* ✅ Sections */
+.page-section {
   display: none;
+  margin-top: 30px;
 }
 
-/* ✅ TASK CARD */
-.task-card {
-  min-width: 220px;
-  background: white;
+.active-section {
+  display: block;
+}
+
+/* ✅ Task Box */
+.task-box {
+  margin-top: 15px;
   padding: 15px;
-  border-radius: 18px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-}
-
-.task-card.completed {
-  opacity: 0.6;
-  text-decoration: line-through;
-}
-
-/* ✅ CARD ACTIONS */
-.task-actions {
-  margin-top: 12px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.task-actions button {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-size: 18px;
-}
-
-/* ✅ ARROWS */
-.arrow-btn {
-  background: #7494ec;
-  border: none;
-  color: white;
-  font-size: 18px;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.arrow-btn:hover {
-  background: #5f7eea;
-}
-
-/* ✅ TASK COMPOSER */
-.task-composer {
-  position: fixed;
-  bottom: 60px;
-  width: 420px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-}
-
-.composer-btn {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 14px;
-  background: #7494ec;
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.composer-btn:hover {
-  background: #5f7eea;
-}
-
-.composer-form {
-  display: none;
-  margin-top: 10px;
-  background: white;
-  padding: 15px;
-  border-radius: 18px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
-}
-
-.composer-form input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-}
-
-.datetime-row {
-  display: flex;
-  gap: 10px;
-}
-
-.datetime-row input {
-  flex: 1;
-}
-
-.submit-btn {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 12px;
-  background: #22c55e;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.submit-btn:hover {
-  background: #16a34a;
+  background: var(--bg);
+  border-radius: 15px;
 }
