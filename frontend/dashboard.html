@@ -5,7 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Taskora Dashboard</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- ✅ Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 
@@ -14,40 +17,30 @@
   <!-- ✅ Sidebar -->
   <aside class="sidebar">
 
-    <!-- App Brand -->
     <div class="brand">
       <h2>Taskora</h2>
     </div>
 
     <div class="divider"></div>
 
-    <!-- Menu -->
+    <!-- ✅ Menu -->
     <nav class="menu">
-
       <a href="#" class="nav-link active" data-section="dashboard">
-        <i class="icon fa-solid fa-house"></i>
+        <i class="fa-solid fa-house icon"></i>
         Dashboard
       </a>
 
       <a href="#" class="nav-link" data-section="mytasks">
-        <i class="icon fa-solid fa-list-check"></i>
+        <i class="fa-solid fa-list-check icon"></i>
         My Tasks
       </a>
-
-      <a href="#" class="nav-link" data-section="track">
-        <i class="icon fa-solid fa-chart-line"></i>
-        Track Tasks
-      </a>
-
     </nav>
 
-
-    <!-- Bottom Controls -->
+    <!-- ✅ Bottom Controls -->
     <div class="bottom-controls">
 
-      <!-- ✅ Dark/Light Switch -->
+      <!-- ✅ Mode Toggle -->
       <div class="mode-toggle">
-
         <span id="lightMode" class="active">
           <i class="fa-solid fa-sun toggle-icon"></i> Light
         </span>
@@ -55,27 +48,26 @@
         <span id="darkMode">
           <i class="fa-solid fa-moon toggle-icon"></i> Dark
         </span>
-
-
       </div>
 
-      <!-- ✅ Logout -->
-      <button id="logoutBtn" class="logout-btn">Logout</button>
+      <!-- ✅ Logout Button -->
+      <button id="logoutBtn" class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
 
     </div>
   </aside>
 
-  <!-- ✅ Main Content -->
+
+  <!-- ✅ Main -->
   <main class="main">
 
     <!-- ✅ Topbar -->
     <header class="topbar">
       <input id="searchBox" class="search-box" placeholder="Search tasks..." />
 
+      <!-- ✅ Only Profile Icon -->
       <div class="actions">
-        <button id="newTaskBtn" class="new-btn">+ New task</button>
-
-        <!-- ✅ Profile Icon Violet -->
         <div id="profileIcon" class="profile-icon">S</div>
       </div>
     </header>
@@ -87,26 +79,116 @@
       <p id="profileGreeting"></p>
     </div>
 
-    <!-- ✅ Page Sections -->
+    <!-- ✅ Sections -->
 
-    <!-- Dashboard -->
     <section id="dashboardSection" class="page-section active-section">
-      <h2>Welcome to Taskora 👋</h2>
-      <p>Your secure productivity dashboard.</p>
+
+      <div class="dashboard-grid">
+
+        <!-- ✅ LEFT SIDE -->
+        <div class="dashboard-left">
+
+          <!-- Top Box -->
+          <div class="dash-card calendar-card">
+            <h3>Calendar</h3>
+
+            <div class="calendar-header">
+              <button class="cal-btn" id="prevMonth">‹</button>
+              <span id="calendarMonthYear"></span>
+              <button class="cal-btn" id="nextMonth">›</button>
+            </div>
+
+            <div class="calendar-days">
+              <span>Su</span><span>Mo</span><span>Tu</span>
+              <span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+            </div>
+
+            <div class="calendar-dates" id="calendarDates"></div>
+          </div>
+
+
+
+          <!-- Bottom Box -->
+          <div class="dash-card">
+            <h3>Productivity Insights</h3>
+            <p>Analytics & performance will appear here.</p>
+          </div>
+
+        </div>
+
+
+        <!-- ✅ RIGHT SIDE: New Task Panel -->
+        <div class="dashboard-right">
+
+          <div class="newtask-card">
+
+            <!-- Header -->
+            <div class="newtask-header">
+              <input type="text" placeholder="Name of task" />
+              <button class="close-btn">✕</button>
+            </div>
+
+            <!-- Options -->
+            <div class="newtask-options">
+
+              <div class="option-row">
+                <span>Day</span>
+                <div class="chips">
+                  <button class="chip active">Today</button>
+                  <button class="chip">Tomorrow</button>
+                  <button class="chip">+</button>
+                </div>
+              </div>
+
+              <div class="option-row">
+                <span>Notification</span>
+                <div class="chips">
+                  <button class="chip">In 1 hour</button>
+                  <button class="chip">+</button>
+                </div>
+              </div>
+
+              <div class="option-row">
+                <span>Priority</span>
+                <div class="chips">
+                  <button class="chip">+ Add priority</button>
+                </div>
+              </div>
+
+              <div class="option-row">
+                <span>Tags</span>
+                <div class="chips">
+                  <button class="chip">+ Add tags</button>
+                </div>
+              </div>
+
+              <div class="option-row">
+                <span>Assign</span>
+                <div class="chips">
+                  <button class="chip">+ Add assignee</button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Create Button -->
+            <button class="create-task-btn">Create Task</button>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </section>
 
-    <!-- My Tasks -->
+
+    <!-- ✅ My Tasks Section -->
     <section id="mytasksSection" class="page-section">
       <h2>My Tasks</h2>
-      <div class="task-box" id="taskList">
-        <!-- Tasks load here -->
-      </div>
-    </section>
 
-    <!-- Track Tasks -->
-    <section id="trackSection" class="page-section">
-      <h2>Track Tasks</h2>
-      <p>Task analytics & progress will appear here.</p>
+      <!-- ✅ Only 3 Cards -->
+      <div id="taskContainer"></div>
     </section>
 
   </main>

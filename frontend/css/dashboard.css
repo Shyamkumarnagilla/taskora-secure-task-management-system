@@ -7,6 +7,7 @@
   --muted: #666;
   --primary: #ffbf00;
   --border: #eaeaea;
+  --violet: #7c3aed;
 }
 
 /* ✅ Dark Mode */
@@ -30,6 +31,7 @@ body {
   height: 100vh;
   background: var(--bg);
   overflow: hidden;
+  color: var(--text);
 }
 
 /* ✅ Sidebar */
@@ -46,7 +48,6 @@ body {
 .brand h2 {
   font-size: 22px;
   font-weight: 700;
-  color: var(--text);
 }
 
 .divider {
@@ -59,20 +60,8 @@ body {
 .icon {
   font-size: 18px;
   margin-right: 12px;
-  color: black; /* Light Mode */
-  transition: 0.3s;
+  color: var(--text);
 }
-
-/* ✅ Dark Mode Icons */
-body.dark .icon {
-  color: white; /* Dark Mode */
-}
-
-/* ✅ Active icon follows text color automatically */
-.menu a.active .icon {
-  color: inherit !important;
-}
-
 
 /* ✅ Menu */
 .menu a {
@@ -87,17 +76,18 @@ body.dark .icon {
 
 .menu a:hover {
   background: var(--bg);
+  color: var(--text);
 }
 
+/* ✅ Active Link */
 .menu a.active {
   background: var(--primary);
   font-weight: 700;
-  color: #000; /* Light Mode */
+  color: black;
 }
 
-/* ✅ Dark Mode Active Menu Text */
-body.dark .menu a.active {
-  color: #fff; /* White text */
+.menu a.active .icon {
+  color: black;
 }
 
 /* ✅ Bottom Controls */
@@ -105,54 +95,56 @@ body.dark .menu a.active {
   margin-top: auto;
 }
 
+/* ✅ Smaller Mode Toggle + Move Up */
 .mode-toggle {
   display: flex;
   justify-content: space-between;
   background: var(--bg);
   border-radius: 14px;
-  padding: 8px;
-  margin-bottom: 15px;
+  padding: 5px;
+  margin-top: -10px;
+  margin-bottom: 12px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 3px rgba(0, 0, 0, 0.12);
 }
 
 .mode-toggle span {
   flex: 1;
   text-align: center;
-  padding: 10px;
-  border-radius: 12px;
+  padding: 6px 0;
+  font-size: 13px;
+  border-radius: 10px;
   cursor: pointer;
+  color: var(--text);
 }
 
 .mode-toggle .active {
   background: var(--primary);
   font-weight: 700;
-  color: #000;
+  color: black;
 }
 
-/* ✅ Dark mode toggle active text */
-body.dark .mode-toggle .active {
-  color: #fff;
-}
-
-
-/* ✅ Mode Toggle Icons Follow Text */
 .toggle-icon {
-  margin-right: 6px;
-  font-size: 16px;
+  margin-right: 4px;
+  font-size: 13px;
   color: inherit;
 }
 
-/* ✅ Logout Button */
+/* ✅ Logout Violet */
 .logout-btn {
   width: 100%;
   padding: 12px;
   border: none;
   border-radius: 14px;
-  background: #a67c00;
+  background: var(--violet);
   color: white;
+  font-weight: 600;
   cursor: pointer;
 }
 
-/* ✅ Main Content */
+/* ✅ Main */
 .main {
   flex: 1;
   margin: 20px;
@@ -179,28 +171,19 @@ body.dark .mode-toggle .active {
   color: var(--text);
 }
 
+/* ✅ Profile Actions */
 .actions {
   display: flex;
-  gap: 12px;
   align-items: center;
+  justify-content: flex-end;
 }
 
-/* ✅ New Task Button */
-.new-btn {
-  padding: 10px 18px;
-  border-radius: 14px;
-  border: none;
-  background: var(--primary);
-  font-weight: 700;
-  cursor: pointer;
-}
-
-/* ✅ Profile Icon Violet Both Modes */
+/* ✅ Profile Icon Violet */
 .profile-icon {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #a67c00;
+  background: var(--primary);
   color: white;
   font-weight: 700;
   display: flex;
@@ -209,7 +192,7 @@ body.dark .mode-toggle .active {
   cursor: pointer;
 }
 
-/* ✅ Glossy Profile Menu */
+/* ✅ Profile Menu */
 .profile-menu {
   position: absolute;
   top: 80px;
@@ -217,23 +200,16 @@ body.dark .mode-toggle .active {
   width: 230px;
   padding: 18px;
   border-radius: 18px;
-
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(12px);
-
-  border: 1px solid rgba(255, 255, 255, 0.3);
-
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
-
   display: none;
   text-align: center;
   z-index: 999;
 }
 
-/* ✅ Dark Mode Glossy Menu */
 body.dark .profile-menu {
-  background: rgba(30, 30, 30, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(30, 30, 30, 0.85);
+  color: white;
 }
 
 /* ✅ Avatar */
@@ -242,7 +218,7 @@ body.dark .profile-menu {
   height: 60px;
   margin: 10px auto;
   border-radius: 50%;
-  background: #a67c00;
+  background: var(--primary);
   font-weight: 700;
   display: flex;
   justify-content: center;
@@ -259,10 +235,300 @@ body.dark .profile-menu {
   display: block;
 }
 
-/* ✅ Task Box */
-.task-box {
-  margin-top: 15px;
-  padding: 15px;
+/* ✅ Dashboard Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 25px;
+  margin-top: 25px;
+}
+
+/* ✅ Calendar Card */
+.calendar-card {
+  padding: 20px;
+  width: 75%;
+  margin: 0 auto;
+}
+
+/* ✅ Calendar Header */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.cal-btn {
+  border: none;
+  background: var(--card);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text);
+}
+
+/* ✅ Days Row */
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+/* ✅ Dates Grid */
+.calendar-dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  text-align: center;
+}
+
+.calendar-dates span {
+  padding: 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text);
+  transition: 0.2s;
+}
+
+.calendar-dates span:hover {
+  background: var(--violet);
+  color: black;
+}
+
+/* ✅ Highlight Today */
+.today-date {
+  background: var(--primary);
+  color: white !important;
+  font-weight: 700;
+}
+
+/* ✅ LEFT SIDE */
+.dashboard-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ✅ Left Cards */
+.dash-card {
   background: var(--bg);
-  border-radius: 15px;
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.dash-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.dash-card p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ✅ RIGHT SIDE Task Panel */
+.newtask-card {
+  background: var(--bg);
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ✅ Header */
+.newtask-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.newtask-header input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+}
+
+.close-btn {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+/* ✅ Options Rows */
+.option-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+}
+
+/* ✅ Chips Style */
+.chip {
+  padding: 6px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.chip.active {
+  background: var(--primary);
+  border: none;
+  color: black;
+}
+
+/* ✅ Create Button */
+.create-task-btn {
+  align-self: flex-end;
+  padding: 10px 18px;
+  border-radius: 14px;
+  border: none;
+  background: var(--primary);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+/* ✅ Task Cards */
+.task-group-card {
+  margin-top: 40px;
+  background: var(--bg);
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* ✅ Header Row (Status Removed) */
+.task-header {
+  display: grid;
+  grid-template-columns: 0.4fr 2fr 1.2fr 1.4fr 2fr;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--muted);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ✅ Center headings except group label */
+.task-header span:nth-child(3),
+.task-header span:nth-child(4),
+.task-header span:nth-child(5) {
+  text-align: center;
+}
+
+/* ✅ Group Title */
+.group-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: left;
+}
+
+/* ✅ Task Row (Status Removed) */
+.task-row {
+  display: grid;
+  grid-template-columns: 0.4fr 2fr 1.2fr 1.4fr 2fr;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ✅ Hollow Star Toggle */
+.task-check {
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--muted); /* Only outline visible */
+  transition: 0.2s;
+}
+
+/* ✅ When Clicked → Filled Green Star */
+.task-check.checked {
+  color: var(--primary);
+}
+
+/* ✅ Title */
+.task-title {
+  font-weight: 600;
+}
+
+/* ✅ Pills */
+.task-pill {
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ✅ Due Date Matches Pill Font */
+.due-pill {
+  background: transparent;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ✅ Priority Colors */
+.priority-high {
+  background: #ff7675;
+  color: white;
+}
+
+.priority-medium {
+  background: #fdcb6e;
+}
+
+.priority-low {
+  background: #55efc4;
+}
+
+/* ✅ Actions */
+.task-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.done-btn {
+  padding: 7px 16px;
+  border-radius: 12px;
+  background: #00b894;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-btn {
+  padding: 7px 16px;
+  border-radius: 12px;
+  background: #d63031;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
