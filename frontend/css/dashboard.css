@@ -532,3 +532,132 @@ body.dark .profile-menu {
   border: none;
   cursor: pointer;
 }
+
+
+/* ================================================= */
+/* ✅ FINAL SIMPLE DASHBOARD STRUCTURE (NO SCROLL)   */
+/* ================================================= */
+
+#dashboardSection {
+  height: calc(96vh - 140px);
+}
+
+/* ✅ Wrapper = 2 Parts */
+.dashboard-wrapper {
+  display: flex;
+  gap: 18px;
+  height: 100%;
+}
+
+/* ✅ PART 1 */
+.part1 {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ✅ A = 35% Height */
+.box-a {
+  height: 35%;
+}
+
+/* ✅ Bottom of Part1 = Remaining */
+.part1-bottom {
+  flex: 1;
+  display: flex;
+  gap: 18px;
+}
+
+/* ✅ B = 65% Width */
+.box-b {
+  width: 60%;
+}
+
+/* ✅ C = Remaining 35% */
+.box-c {
+  width: 40%;
+  overflow-y: auto;
+}
+
+/* ✅ PART 2 */
+.part2 {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ✅ X = 60% Height Calendar */
+.box-x {
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ✅ Calendar always fills */
+.calendar-dates {
+  flex-grow: 1;
+}
+
+/* ✅ Y = Remaining Height */
+.box-y {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ✅ Common Card Style */
+.dash-box {
+  background: var(--bg);
+  padding: 18px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* ✅ Stats Layout */
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.stat-box {
+  flex: 1;
+  margin: 0 8px;
+  background: var(--card);
+  padding: 16px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.stat-box h1 {
+  font-size: 30px;
+  margin-top: 6px;
+  color: var(--primary);
+}
+
+/* ✅ Button */
+.new-task-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 14px;
+  background: var(--primary);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ✅ Lists */
+.box-c ul,
+.box-y ul {
+  margin-top: 12px;
+  padding-left: 18px;
+}
+
+.box-c li,
+.box-y li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}

@@ -191,6 +191,7 @@ function toggleDone(title) {
   });
 
   renderTasks();
+  updateDashboardData();
 }
 
 /* ✅ LOAD TASKS INITIALLY */
@@ -284,3 +285,42 @@ nextBtn.onclick = () => {
 
 /* ✅ Initial Calendar Load */
 renderCalendar(currentMonth, currentYear);
+
+/* ✅ DASHBOARD SECTION LISTS + COUNTS */
+
+function updateDashboardData() {
+  let total = tasks.length;
+  let completed = tasks.filter((t) => t.done).length;
+  let pending = total - completed;
+
+  document.getElementById("totalTasks").innerText = total;
+  document.getElementById("completedTasks").innerText = completed;
+  document.getElementById("pendingTasks").innerText = pending;
+
+  /* ✅ Today's Plan */
+  const todayBox = document.getElementById("todayTasksList");
+  todayBox.innerHTML = "";
+
+  tasks
+    .filter((t) => t.group === "Today")
+    .forEach((task) => {
+      let li = document.createElement("li");
+      li.innerText = task.title;
+      todayBox.appendChild(li);
+    });
+
+  /* ✅ Completed Tasks */
+  const completedBox = document.getElementById("completedTasksList");
+  completedBox.innerHTML = "";
+
+  tasks
+    .filter((t) => t.done)
+    .forEach((task) => {
+      let li = document.createElement("li");
+      li.innerText = task.title;
+      completedBox.appendChild(li);
+    });
+}
+
+/* ✅ Call Initially */
+updateDashboardData();
