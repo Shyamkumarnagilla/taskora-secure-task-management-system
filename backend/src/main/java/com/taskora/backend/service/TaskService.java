@@ -1,6 +1,5 @@
 package com.taskora.backend.service;
 
-import com.taskora.backend.dto.TaskRequest;
 import com.taskora.backend.entity.Task;
 import com.taskora.backend.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,44 +11,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskService {
 
-    private final TaskRepository taskRepository;
+    private final TaskRepository repo;
 
-    public Task createTask(TaskRequest request) {
-
-        Task task = Task.builder()
-                .title(request.getTitle())
-                .description(request.getDescription())
-                .userEmail(request.getUserEmail())
-                .completed(false)
-                .build();
-
-        return taskRepository.save(task);
+    // ✅ Get Tasks of User
+    public List<Task> getTasksByEmail(String email) {
+        return repo.findByUserEmail(email);
     }
 
-    // ✅ Mark Task Completed
+    // ✅ Create Task
+    public Task createTask(Task task) {
+        return repo.save(task);
+    }
+
+    // ✅ Mark Done
     public Task completeTask(Long id) {
-        Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
-
-        task.setCompleted(true);
-        return taskRepository.save(task);
+        Task t = repo.findById(id).orElseThrow();
+        t.setDone(true);
+        return repo.save(t);
     }
 
-    // ✅ Update Task Title
-    public Task updateTask(Long id, String newTitle) {
-        Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
-
-        task.setTitle(newTitle);
-        return taskRepository.save(task);
+    // ✅ Toggle Pin
+    public Task togglePin(Long id) {
+        Task t = repo.findById(id).orElseThrow();
+        t.setPinned(!t.isPinned());
+        return repo.save(t);
     }
 
-    // ✅ Delete Task
+    // ✅ Delete
     public void deleteTask(Long id) {
-        taskRepository.deleteById(id);
-    }
-
-    public List<Task> getTasksByUser(String email) {
-        return taskRepository.findByUserEmail(email);
+        repo.deleteById(id);
     }
 }

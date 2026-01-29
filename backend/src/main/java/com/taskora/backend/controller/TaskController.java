@@ -1,10 +1,8 @@
 package com.taskora.backend.controller;
 
-import com.taskora.backend.dto.TaskRequest;
 import com.taskora.backend.entity.Task;
 import com.taskora.backend.service.TaskService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,42 +10,38 @@ import java.util.List;
 @RestController
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class TaskController {
 
-    private final TaskService taskService;
+    private final TaskService service;
 
-    // ✅ Create new task
-    @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody TaskRequest request) {
-        return ResponseEntity.ok(taskService.createTask(request));
+    // ✅ Load Tasks for User
+    @GetMapping("/{email}")
+    public List<Task> getTasks(@PathVariable String email) {
+        return service.getTasksByEmail(email);
     }
 
-    // ✅ Get tasks for a user
-    @GetMapping("/{email}")
-    public ResponseEntity<List<Task>> getTasks(@PathVariable String email) {
-        return ResponseEntity.ok(taskService.getTasksByUser(email));
+    // ✅ Create Task
+    @PostMapping
+    public Task createTask(@RequestBody Task task) {
+        return service.createTask(task);
     }
 
     // ✅ Complete Task
     @PutMapping("/{id}/complete")
-    public ResponseEntity<Task> completeTask(@PathVariable Long id) {
-        return ResponseEntity.ok(taskService.completeTask(id));
+    public Task completeTask(@PathVariable Long id) {
+        return service.completeTask(id);
     }
 
-    // ✅ Update Task Title
-    @PutMapping("/{id}/update")
-    public ResponseEntity<Task> updateTask(
-            @PathVariable Long id,
-            @RequestParam String title) {
-        return ResponseEntity.ok(taskService.updateTask(id, title));
+    // ✅ Pin Task
+    @PutMapping("/{id}/pin")
+    public Task pinTask(@PathVariable Long id) {
+        return service.togglePin(id);
     }
 
     // ✅ Delete Task
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
-        taskService.deleteTask(id);
-        return ResponseEntity.ok("Task deleted");
+    public void deleteTask(@PathVariable Long id) {
+        service.deleteTask(id);
     }
-
 }

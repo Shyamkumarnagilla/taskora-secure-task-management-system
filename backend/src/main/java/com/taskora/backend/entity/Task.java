@@ -4,26 +4,32 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "tasks")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "tasks")
 public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String title;
 
-    private String description;
+    // ✅ UI Group: Today / Tomorrow / This Week
+    private String groupName;
 
-    @Builder.Default
-    @Column(nullable = false)
-    private boolean completed = false;
+    // ✅ Due text shown in UI
+    private String due;
 
-    private String userEmail; // Later replaced with proper relationship
+    // ✅ High / Medium / Low
+    private String priority;
+
+    private boolean pinned;
+
+    private boolean done;
+
+    // ✅ Task belongs to logged user
+    private String userEmail;
 }
