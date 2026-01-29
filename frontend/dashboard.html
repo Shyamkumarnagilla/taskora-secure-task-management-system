@@ -74,7 +74,7 @@
 
     <!-- ✅ Profile Dropdown -->
     <div id="profileMenu" class="profile-menu">
-      <p id="menuEmail"></p>
+      <p id="menuEmail" class="profile-email"></p>
       <div class="avatar" id="profileAvatar">S</div>
       <p id="profileGreeting"></p>
     </div>
@@ -128,9 +128,9 @@
                 <span class="chip-label">Day</span>
 
                 <div class="chip-group" id="dayChips">
-                  <button class="chip active" data-value="Today">Today</button>
+                  <button class="chip" data-value="Today">Today</button>
                   <button class="chip" data-value="Tomorrow">Tomorrow</button>
-                  <button class="chip" data-value="This Week">+</button>
+                  <button class="chip" data-value="This Week">This Week</button>
                 </div>
               </div>
 
@@ -139,7 +139,7 @@
                 <span class="chip-label">Priority</span>
 
                 <div class="chip-group" id="priorityChips">
-                  <button class="chip active" data-value="High">High</button>
+                  <button class="chip" data-value="High">High</button>
                   <button class="chip" data-value="Medium">Medium</button>
                   <button class="chip" data-value="Low">Low</button>
                 </div>
@@ -149,6 +149,9 @@
               <button class="create-task-btn" id="createTaskBtn">
                 + Create Task
               </button>
+
+              <!-- ✅ Success Message -->
+              <p id="taskSuccessMsg" class="task-success-msg"></p>
 
             </div>
 

@@ -1,19 +1,46 @@
+/******************************************************
+ ✅ TASKORA DASHBOARD (FULL BACKEND CONNECTED VERSION)
+*******************************************************/
+
 const email = localStorage.getItem("taskora_email");
 const token = localStorage.getItem("taskora_token");
 
 if (!email || !token) window.location.href = "index.html";
 
+const API = "http://localhost:8081/tasks";
+
 /* ✅ PROFILE DROPDOWN */
 const profileIcon = document.getElementById("profileIcon");
 const profileMenu = document.getElementById("profileMenu");
 
+// ✅ Show Email in Profile Menu
 document.getElementById("menuEmail").innerText = email;
-document.getElementById("profileGreeting").innerText =
-  "Hi, " + email.split("@")[0] + "!";
 
-profileIcon.innerText = email.charAt(0).toUpperCase();
-document.getElementById("profileAvatar").innerText =
-  email.charAt(0).toUpperCase();
+// ✅ Load Username from Backend and Display Greeting
+async function loadUserProfile() {
+  try {
+    const res = await fetch(`http://localhost:8081/users/${email}`);
+    const user = await res.json();
+
+    // ✅ Greeting uses registered name
+    document.getElementById("profileGreeting").innerText =
+      "Hi, " + user.name + "!";
+
+    // ✅ Avatar uses first letter of username
+    profileIcon.innerText = user.name.charAt(0).toUpperCase();
+    document.getElementById("profileAvatar").innerText =
+      user.name.charAt(0).toUpperCase();
+
+  } catch (err) {
+    console.error("User profile load failed:", err);
+
+    // ✅ Fallback if API fails
+    document.getElementById("profileGreeting").innerText = "Hi, User!";
+  }
+}
+
+// ✅ Call Once When Dashboard Loads
+loadUserProfile();
 
 profileIcon.onclick = () => {
   profileMenu.style.display =
@@ -66,59 +93,106 @@ links.forEach((link) => {
   };
 });
 
-/* ✅ TASKS DATA */
-let tasks = [
-  {
-    title: "Finish monthly reporting",
-    due: "Today",
-    priority: "High",
-    group: "Today",
-    pinned: false,
-    done: false,
-  },
-  {
-    title: "Contract signing",
-    due: "Today",
-    priority: "Medium",
-    group: "Today",
-    pinned: false,
-    done: false,
-  },
-  {
-    title: "Brand proposal",
-    due: "Tomorrow",
-    priority: "High",
-    group: "Tomorrow",
-    pinned: false,
-    done: false,
-  },
-  {
-    title: "Social media review",
-    due: "Tomorrow",
-    priority: "Medium",
-    group: "Tomorrow",
-    pinned: false,
-    done: false,
-  },
-  {
-    title: "Order check-ins",
-    due: "Wednesday",
-    priority: "Medium",
-    group: "This Week",
-    pinned: false,
-    done: false,
-  },
-  {
-    title: "HR reviews",
-    due: "Friday",
-    priority: "Low",
-    group: "This Week",
-    pinned: false,
-    done: false,
-  },
-];
+/******************************************************
+ ✅ TASKS STORAGE (FROM MYSQL)
+*******************************************************/
+let tasks = [];
 
-/* ✅ RENDER MY TASKS (Pending Tasks Only) */
+/* ✅ LOAD TASKS FROM BACKEND */
+async function loadTasks() {
+  try {
+    const res = await fetch(`${API}/${email}`);
+    tasks = await res.json();
+
+    renderTasks();
+    renderCompletedSummary();
+    updateDashboardData();
+  } catch (err) {
+    console.error("Error loading tasks:", err);
+  }
+}
+
+/******************************************************
+ ✅ CHIP SELECTION HANDLER
+*******************************************************/
+function setupChips(groupId) {
+  const chips = document.querySelectorAll(`#${groupId} .chip`);
+
+  chips.forEach((chip) => {
+    chip.onclick = () => {
+      chips.forEach((c) => c.classList.remove("active"));
+      chip.classList.add("active");
+    };
+  });
+}
+
+setupChips("dayChips");
+setupChips("priorityChips");
+
+/******************************************************
+ ✅ CREATE TASK (SAVE TO MYSQL)
+*******************************************************/
+document.getElementById("createTaskBtn").onclick = async () => {
+  const title = document.getElementById("taskInput").value.trim();
+
+  // ✅ Validation: Task title must not be empty
+  if (!title) {
+    alert("⚠️ Please enter a task title!");
+    return;
+  }
+
+  // ✅ Selected Day
+  const groupName =
+    document.querySelector("#dayChips .chip.active")?.dataset.value;
+
+  // ✅ Selected Priority
+  const priority =
+    document.querySelector("#priorityChips .chip.active")?.dataset.value;
+
+  // ✅ Validation: Chips must be selected
+  if (!groupName || !priority) {
+    alert("⚠️ Please select Day and Priority!");
+    return;
+  }
+
+  // ✅ Task object to send backend
+  const newTask = {
+    title: title,
+    groupName: groupName,
+    due: groupName,
+    priority: priority,
+    pinned: false,
+    done: false,
+    userEmail: email,
+  };
+
+  // ✅ Save Task in Backend/MySQL
+  await fetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newTask),
+  });
+
+  // ✅ Clear Input
+  document.getElementById("taskInput").value = "";
+
+  // ✅ Show Success Message ONLY after successful creation
+  const msg = document.getElementById("taskSuccessMsg");
+  msg.innerText = "✅ Task Created Successfully!";
+  msg.style.display = "block";
+
+  // ✅ Hide after 3 seconds
+  setTimeout(() => {
+    msg.style.display = "none";
+  }, 3000);
+
+  // ✅ Reload tasks from DB
+  loadTasks();
+};
+
+/******************************************************
+ ✅ RENDER TASKS (MY TASKS SECTION)
+*******************************************************/
 function renderTasks() {
   const container = document.getElementById("taskContainer");
   container.innerHTML = "";
@@ -126,9 +200,11 @@ function renderTasks() {
   const groups = ["Today", "Tomorrow", "This Week"];
 
   groups.forEach((grp) => {
-    let groupTasks = tasks.filter((t) => t.group === grp && !t.done);
+    let groupTasks = tasks.filter(
+      (t) => t.groupName === grp && !t.done
+    );
 
-    /* ✅ Pinned Tasks Come First */
+    // ✅ Pinned tasks first
     groupTasks.sort((a, b) => b.pinned - a.pinned);
 
     let html = `
@@ -153,13 +229,13 @@ function renderTasks() {
       html += `
         <div class="task-row">
 
-          <!-- ✅ Star = Pin -->
+          <!-- ✅ Pin Star -->
           <i
             class="${task.pinned
           ? "fa-solid fa-star checked"
           : "fa-regular fa-star"
         } task-check"
-            onclick="togglePin('${task.title}')">
+            onclick="togglePin(${task.id})">
           </i>
 
           <span class="task-title">${task.title}</span>
@@ -171,15 +247,13 @@ function renderTasks() {
           </span>
 
           <div class="task-actions">
-            <!-- ✅ Done Marks Completed -->
-            <button class="done-btn" onclick="markTaskDone('${task.title}')">
+            <button class="done-btn" onclick="markTaskDone(${task.id})">
               Done
             </button>
 
-            <button class="delete-btn" onclick="deleteTask('${task.title}')">
+            <button class="delete-btn" onclick="deleteTask(${task.id})">
               Delete
             </button>
-
           </div>
 
         </div>
@@ -191,46 +265,35 @@ function renderTasks() {
   });
 }
 
-/* ✅ PIN TOGGLE */
-function togglePin(title) {
-  tasks = tasks.map((task) => {
-    if (task.title === title) {
-      task.pinned = !task.pinned;
-    }
-    return task;
-  });
-
-  renderTasks();
+/******************************************************
+ ✅ PIN TASK (BACKEND)
+*******************************************************/
+async function togglePin(id) {
+  await fetch(`${API}/${id}/pin`, { method: "PUT" });
+  loadTasks();
 }
 
-/* ✅ DONE BUTTON MARKS COMPLETED */
-function markTaskDone(title) {
-  tasks = tasks.map((task) => {
-    if (task.title === title) {
-      task.done = true;
-    }
-    return task;
-  });
-
-  renderTasks();
-  renderCompletedSummary();
-  updateDashboardData();
+/******************************************************
+ ✅ MARK TASK DONE (BACKEND)
+*******************************************************/
+async function markTaskDone(id) {
+  await fetch(`${API}/${id}/complete`, { method: "PUT" });
+  loadTasks();
 }
 
-/* ✅ DELETE TASK COMPLETELY */
-function deleteTask(title) {
-  tasks = tasks.filter((task) => task.title !== title);
-
-  renderTasks();
-  renderCompletedSummary();
-  updateDashboardData();
+/******************************************************
+ ✅ DELETE TASK (BACKEND)
+*******************************************************/
+async function deleteTask(id) {
+  await fetch(`${API}/${id}`, { method: "DELETE" });
+  loadTasks();
 }
 
-/* ✅ COMPLETED TASKS SUMMARY (Single Card Only) */
+/******************************************************
+ ✅ COMPLETED TASKS SUMMARY
+*******************************************************/
 function renderCompletedSummary() {
   const container = document.getElementById("completedTaskContainer");
-  if (!container) return;
-
   container.innerHTML = "";
 
   let completedTasks = tasks.filter((t) => t.done);
@@ -246,24 +309,19 @@ function renderCompletedSummary() {
     return;
   }
 
-  let html = `
-    <div class="completed-group-card">
-      <ul>
-  `;
+  let html = `<div class="completed-group-card"><ul>`;
 
   completedTasks.forEach((task) => {
     html += `<li>${task.title}</li>`;
   });
 
-  html += `
-      </ul>
-    </div>
-  `;
-
+  html += `</ul></div>`;
   container.innerHTML = html;
 }
 
-/* ✅ DASHBOARD DATA UPDATE */
+/******************************************************
+ ✅ DASHBOARD STATS + PROGRESS + WEEK PLAN
+*******************************************************/
 function updateDashboardData() {
   let total = tasks.length;
   let completed = tasks.filter((t) => t.done).length;
@@ -273,7 +331,7 @@ function updateDashboardData() {
   document.getElementById("completedTasks").innerText = completed;
   document.getElementById("pendingTasks").innerText = pending;
 
-  /* ✅ Progress Ring */
+  // ✅ Progress %
   let percent = total === 0 ? 0 : Math.round((completed / total) * 100);
 
   document.getElementById("progressPercent").innerText = percent + "%";
@@ -284,34 +342,32 @@ function updateDashboardData() {
     var(--border) 0deg
   )`;
 
-  /* ✅ Week Plan */
+  // ✅ Week Plan List
   const weekList = document.getElementById("weekTasksList");
   weekList.innerHTML = "";
 
-  tasks
-    .filter(
-      (t) =>
-        (t.group === "Today" ||
-          t.group === "Tomorrow" ||
-          t.group === "This Week") &&
-        !t.done
-    )
-    .forEach((task) => {
-      let li = document.createElement("li");
-      li.innerText = task.title;
-      weekList.appendChild(li);
-    });
+  tasks.filter((t) => !t.done).forEach((task) => {
+    let li = document.createElement("li");
+    li.innerText = task.title;
+    weekList.appendChild(li);
+  });
 }
 
-/* ✅ INITIAL LOAD */
-renderTasks();
-renderCompletedSummary();
-updateDashboardData();
+/******************************************************
+ ✅ MAKE FUNCTIONS GLOBAL FOR BUTTONS
+*******************************************************/
+window.togglePin = togglePin;
+window.markTaskDone = markTaskDone;
+window.deleteTask = deleteTask;
 
-/* ===================================== */
-/* ✅ REAL-TIME CALENDAR CODE */
-/* ===================================== */
+/******************************************************
+ ✅ INITIAL LOAD
+*******************************************************/
+loadTasks();
 
+/******************************************************
+ ✅ CALENDAR (UNCHANGED)
+*******************************************************/
 const monthYearText = document.getElementById("calendarMonthYear");
 const datesGrid = document.getElementById("calendarDates");
 
@@ -324,7 +380,7 @@ let currentYear = currentDate.getFullYear();
 
 const months = [
   "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+  "July", "August", "September", "October", "November", "December"
 ];
 
 function renderCalendar(month, year) {
@@ -335,8 +391,7 @@ function renderCalendar(month, year) {
   let totalDays = new Date(year, month + 1, 0).getDate();
 
   for (let i = 0; i < firstDay; i++) {
-    let blank = document.createElement("span");
-    datesGrid.appendChild(blank);
+    datesGrid.appendChild(document.createElement("span"));
   }
 
   for (let day = 1; day <= totalDays; day++) {
