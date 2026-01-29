@@ -66,13 +66,14 @@ links.forEach((link) => {
   };
 });
 
-/* ✅ TASKS DATA (NO STATUS COLUMN) */
+/* ✅ TASKS DATA */
 let tasks = [
   {
     title: "Finish monthly reporting",
     due: "Today",
     priority: "High",
     group: "Today",
+    pinned: false,
     done: false,
   },
   {
@@ -80,6 +81,7 @@ let tasks = [
     due: "Today",
     priority: "Medium",
     group: "Today",
+    pinned: false,
     done: false,
   },
   {
@@ -87,6 +89,7 @@ let tasks = [
     due: "Tomorrow",
     priority: "High",
     group: "Tomorrow",
+    pinned: false,
     done: false,
   },
   {
@@ -94,6 +97,7 @@ let tasks = [
     due: "Tomorrow",
     priority: "Medium",
     group: "Tomorrow",
+    pinned: false,
     done: false,
   },
   {
@@ -101,6 +105,7 @@ let tasks = [
     due: "Wednesday",
     priority: "Medium",
     group: "This Week",
+    pinned: false,
     done: false,
   },
   {
@@ -108,11 +113,12 @@ let tasks = [
     due: "Friday",
     priority: "Low",
     group: "This Week",
+    pinned: false,
     done: false,
   },
 ];
 
-/* ✅ RENDER TASKS IN 3 GROUP CARDS */
+/* ✅ RENDER MY TASKS (Pending Tasks Only) */
 function renderTasks() {
   const container = document.getElementById("taskContainer");
   container.innerHTML = "";
@@ -120,10 +126,10 @@ function renderTasks() {
   const groups = ["Today", "Tomorrow", "This Week"];
 
   groups.forEach((grp) => {
-    let groupTasks = tasks.filter((t) => t.group === grp);
+    let groupTasks = tasks.filter((t) => t.group === grp && !t.done);
 
-    /* ✅ Starred Tasks Come First */
-    groupTasks.sort((a, b) => b.done - a.done);
+    /* ✅ Pinned Tasks Come First */
+    groupTasks.sort((a, b) => b.pinned - a.pinned);
 
     let html = `
       <div class="task-group-card">
@@ -141,37 +147,41 @@ function renderTasks() {
         task.priority === "High"
           ? "priority-high"
           : task.priority === "Medium"
-          ? "priority-medium"
-          : "priority-low";
+            ? "priority-medium"
+            : "priority-low";
 
       html += `
         <div class="task-row">
 
-          <!-- ✅ Hollow Star Default + Filled Green on Click -->
+          <!-- ✅ Star = Pin -->
           <i
-            class="${
-              task.done
-                ? "fa-solid fa-star checked"
-                : "fa-regular fa-star"
-            } task-check"
-            onclick="toggleDone('${task.title}')">
+            class="${task.pinned
+          ? "fa-solid fa-star checked"
+          : "fa-regular fa-star"
+        } task-check"
+            onclick="togglePin('${task.title}')">
           </i>
 
           <span class="task-title">${task.title}</span>
 
-          <!-- ✅ Due Date Same Size as Pills -->
           <span class="task-pill due-pill">${task.due}</span>
 
-          <!-- ✅ Priority -->
           <span class="task-pill ${priorityClass}">
             ${task.priority}
           </span>
 
-          <!-- ✅ Actions -->
           <div class="task-actions">
-            <button class="done-btn">Done</button>
-            <button class="delete-btn">Delete</button>
+            <!-- ✅ Done Marks Completed -->
+            <button class="done-btn" onclick="markTaskDone('${task.title}')">
+              Done
+            </button>
+
+            <button class="delete-btn" onclick="deleteTask('${task.title}')">
+              Delete
+            </button>
+
           </div>
+
         </div>
       `;
     });
@@ -181,24 +191,125 @@ function renderTasks() {
   });
 }
 
-/* ✅ TOGGLE STAR + MOVE TASK TO TOP */
-function toggleDone(title) {
+/* ✅ PIN TOGGLE */
+function togglePin(title) {
   tasks = tasks.map((task) => {
     if (task.title === title) {
-      task.done = !task.done;
+      task.pinned = !task.pinned;
     }
     return task;
   });
 
   renderTasks();
+}
+
+/* ✅ DONE BUTTON MARKS COMPLETED */
+function markTaskDone(title) {
+  tasks = tasks.map((task) => {
+    if (task.title === title) {
+      task.done = true;
+    }
+    return task;
+  });
+
+  renderTasks();
+  renderCompletedSummary();
   updateDashboardData();
 }
 
-/* ✅ LOAD TASKS INITIALLY */
+/* ✅ DELETE TASK COMPLETELY */
+function deleteTask(title) {
+  tasks = tasks.filter((task) => task.title !== title);
+
+  renderTasks();
+  renderCompletedSummary();
+  updateDashboardData();
+}
+
+/* ✅ COMPLETED TASKS SUMMARY (Single Card Only) */
+function renderCompletedSummary() {
+  const container = document.getElementById("completedTaskContainer");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  let completedTasks = tasks.filter((t) => t.done);
+
+  if (completedTasks.length === 0) {
+    container.innerHTML = `
+      <div class="completed-group-card">
+        <p style="text-align:center; color:var(--muted);">
+          No tasks completed yet ✅
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  let html = `
+    <div class="completed-group-card">
+      <ul>
+  `;
+
+  completedTasks.forEach((task) => {
+    html += `<li>${task.title}</li>`;
+  });
+
+  html += `
+      </ul>
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+
+/* ✅ DASHBOARD DATA UPDATE */
+function updateDashboardData() {
+  let total = tasks.length;
+  let completed = tasks.filter((t) => t.done).length;
+  let pending = total - completed;
+
+  document.getElementById("totalTasks").innerText = total;
+  document.getElementById("completedTasks").innerText = completed;
+  document.getElementById("pendingTasks").innerText = pending;
+
+  /* ✅ Progress Ring */
+  let percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+  document.getElementById("progressPercent").innerText = percent + "%";
+
+  let ring = document.getElementById("progressRing");
+  ring.style.background = `conic-gradient(
+    var(--primary) ${percent * 3.6}deg,
+    var(--border) 0deg
+  )`;
+
+  /* ✅ Week Plan */
+  const weekList = document.getElementById("weekTasksList");
+  weekList.innerHTML = "";
+
+  tasks
+    .filter(
+      (t) =>
+        (t.group === "Today" ||
+          t.group === "Tomorrow" ||
+          t.group === "This Week") &&
+        !t.done
+    )
+    .forEach((task) => {
+      let li = document.createElement("li");
+      li.innerText = task.title;
+      weekList.appendChild(li);
+    });
+}
+
+/* ✅ INITIAL LOAD */
 renderTasks();
+renderCompletedSummary();
+updateDashboardData();
 
 /* ===================================== */
-/* ✅ REAL-TIME FUNCTIONAL CALENDAR CODE */
+/* ✅ REAL-TIME CALENDAR CODE */
 /* ===================================== */
 
 const monthYearText = document.getElementById("calendarMonthYear");
@@ -212,42 +323,26 @@ let currentMonth = currentDate.getMonth();
 let currentYear = currentDate.getFullYear();
 
 const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
 ];
 
-/* ✅ Render Calendar */
 function renderCalendar(month, year) {
   datesGrid.innerHTML = "";
-
   monthYearText.innerText = `${months[month]} ${year}`;
 
   let firstDay = new Date(year, month, 1).getDay();
   let totalDays = new Date(year, month + 1, 0).getDate();
 
-  /* ✅ Blank Cells */
   for (let i = 0; i < firstDay; i++) {
     let blank = document.createElement("span");
-    blank.classList.add("empty");
     datesGrid.appendChild(blank);
   }
 
-  /* ✅ Dates */
   for (let day = 1; day <= totalDays; day++) {
     let cell = document.createElement("span");
     cell.innerText = day;
 
-    /* ✅ Highlight Today */
     if (
       day === new Date().getDate() &&
       month === new Date().getMonth() &&
@@ -260,67 +355,22 @@ function renderCalendar(month, year) {
   }
 }
 
-/* ✅ Month Navigation */
 prevBtn.onclick = () => {
   currentMonth--;
-
   if (currentMonth < 0) {
     currentMonth = 11;
     currentYear--;
   }
-
   renderCalendar(currentMonth, currentYear);
 };
 
 nextBtn.onclick = () => {
   currentMonth++;
-
   if (currentMonth > 11) {
     currentMonth = 0;
     currentYear++;
   }
-
   renderCalendar(currentMonth, currentYear);
 };
 
-/* ✅ Initial Calendar Load */
 renderCalendar(currentMonth, currentYear);
-
-/* ✅ DASHBOARD SECTION LISTS + COUNTS */
-
-function updateDashboardData() {
-  let total = tasks.length;
-  let completed = tasks.filter((t) => t.done).length;
-  let pending = total - completed;
-
-  document.getElementById("totalTasks").innerText = total;
-  document.getElementById("completedTasks").innerText = completed;
-  document.getElementById("pendingTasks").innerText = pending;
-
-  /* ✅ Today's Plan */
-  const todayBox = document.getElementById("todayTasksList");
-  todayBox.innerHTML = "";
-
-  tasks
-    .filter((t) => t.group === "Today")
-    .forEach((task) => {
-      let li = document.createElement("li");
-      li.innerText = task.title;
-      todayBox.appendChild(li);
-    });
-
-  /* ✅ Completed Tasks */
-  const completedBox = document.getElementById("completedTasksList");
-  completedBox.innerHTML = "";
-
-  tasks
-    .filter((t) => t.done)
-    .forEach((task) => {
-      let li = document.createElement("li");
-      li.innerText = task.title;
-      completedBox.appendChild(li);
-    });
-}
-
-/* ✅ Call Initially */
-updateDashboardData();

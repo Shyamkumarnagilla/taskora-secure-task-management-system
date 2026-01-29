@@ -81,98 +81,131 @@
 
     <!-- ✅ Sections -->
 
-<section id="dashboardSection" class="page-section active-section">
+    <section id="dashboardSection" class="page-section active-section">
 
-  <div class="dashboard-wrapper">
+      <div class="dashboard-wrapper">
 
-    <!-- ✅ PART 1 (70%) -->
-    <div class="part1">
+        <!-- ✅ PART 1 (70%) -->
+        <div class="part1">
 
-      <!-- ✅ A: Tasks Overview -->
-      <div class="dash-box box-a">
+          <!-- ✅ A: Tasks Overview -->
+          <div class="dash-box box-a">
 
-        <h3>Tasks Overview</h3>
+            <h3>Tasks Overview</h3>
 
-        <div class="stats-row">
-          <div class="stat-box">
-            <p>Total</p>
-            <h1 id="totalTasks">0</h1>
+            <div class="stats-row">
+              <div class="stat-box">
+                <h1 id="totalTasks">0</h1>
+                <p>Total Tasks</p>
+              </div>
+
+              <div class="stat-box">
+                <h1 id="completedTasks">0</h1>
+                <p>Tasks Completed</p>
+              </div>
+
+              <div class="stat-box">
+                <h1 id="pendingTasks">0</h1>
+                <p>Tasks Pending</p>
+              </div>
+            </div>
+
           </div>
 
-          <div class="stat-box">
-            <p>Completed</p>
-            <h1 id="completedTasks">0</h1>
+          <!-- ✅ Bottom of Part1 -->
+          <div class="part1-bottom">
+
+            <!-- ✅ B: New Task Panel -->
+            <div class="dash-box box-b">
+
+              <h3>New Task</h3>
+
+              <!-- ✅ Task Input -->
+              <textarea id="taskInput" placeholder="Write your task here..."></textarea>
+
+              <!-- ✅ Day Chips -->
+              <div class="chip-row">
+                <span class="chip-label">Day</span>
+
+                <div class="chip-group" id="dayChips">
+                  <button class="chip active" data-value="Today">Today</button>
+                  <button class="chip" data-value="Tomorrow">Tomorrow</button>
+                  <button class="chip" data-value="This Week">+</button>
+                </div>
+              </div>
+
+              <!-- ✅ Priority Chips -->
+              <div class="chip-row">
+                <span class="chip-label">Priority</span>
+
+                <div class="chip-group" id="priorityChips">
+                  <button class="chip active" data-value="High">High</button>
+                  <button class="chip" data-value="Medium">Medium</button>
+                  <button class="chip" data-value="Low">Low</button>
+                </div>
+              </div>
+
+              <!-- ✅ Button Fixed Bottom -->
+              <button class="create-task-btn" id="createTaskBtn">
+                + Create Task
+              </button>
+
+            </div>
+
+
+            <!-- ✅ C: Week Plan -->
+            <div class="dash-box box-c">
+              <h3>Week Plan</h3>
+              <ul id="weekTasksList"></ul>
+            </div>
+
           </div>
 
-          <div class="stat-box">
-            <p>Pending</p>
-            <h1 id="pendingTasks">0</h1>
+        </div>
+
+
+        <!-- ✅ PART 2 (30%) -->
+        <div class="part2">
+
+          <!-- ✅ Y: Completed Tasks -->
+          <div class="dash-box box-y">
+            <h3>Progress</h3>
+
+            <!-- ✅ Progress Ring -->
+            <div class="progress-container">
+              <div class="progress-ring" id="progressRing">
+                <span id="progressPercent">0%</span>
+              </div>
+            </div>
+
           </div>
+
+
+          <!-- ✅ X: Calendar -->
+          <div class="dash-box box-x">
+
+            <h3>Calendar</h3>
+
+            <div class="calendar-header">
+              <button class="cal-btn" id="prevMonth">‹</button>
+              <span id="calendarMonthYear"></span>
+              <button class="cal-btn" id="nextMonth">›</button>
+            </div>
+
+            <div class="calendar-days">
+              <span>Su</span><span>Mo</span><span>Tu</span>
+              <span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+            </div>
+
+            <div class="calendar-dates" id="calendarDates"></div>
+
+          </div>
+
         </div>
 
       </div>
 
-      <!-- ✅ Bottom of Part1 -->
-      <div class="part1-bottom">
-
-        <!-- ✅ B: New Task Panel -->
-        <div class="dash-box box-b">
-          <h3>New Task & Filters</h3>
-          <button class="new-task-btn">+ Create Task</button>
-
-          <p style="margin-top: 15px; color: var(--muted);">
-            Filters will come here...
-          </p>
-        </div>
-
-        <!-- ✅ C: Today's Plan -->
-        <div class="dash-box box-c">
-          <h3>Today's Plan</h3>
-          <ul id="todayTasksList"></ul>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- ✅ PART 2 (30%) -->
-    <div class="part2">
-
-      <!-- ✅ X: Calendar -->
-      <div class="dash-box box-x">
-
-        <h3>Calendar</h3>
-
-        <div class="calendar-header">
-          <button class="cal-btn" id="prevMonth">‹</button>
-          <span id="calendarMonthYear"></span>
-          <button class="cal-btn" id="nextMonth">›</button>
-        </div>
-
-        <div class="calendar-days">
-          <span>Su</span><span>Mo</span><span>Tu</span>
-          <span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
-        </div>
-
-        <div class="calendar-dates" id="calendarDates"></div>
-
-      </div>
-
-      <!-- ✅ Y: Completed Tasks -->
-      <div class="dash-box box-y">
-        <h3>Tasks Completed</h3>
-        <ul id="completedTasksList"></ul>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
+    </section>
 
     <!-- ✅ My Tasks Section -->
     <section id="mytasksSection" class="page-section">
@@ -180,6 +213,10 @@
 
       <!-- ✅ Only 3 Cards -->
       <div id="taskContainer"></div>
+
+      <!-- ✅ Completed Tasks Summary -->
+      <h2 style="margin-top:40px;">Completed Tasks</h2>
+      <div id="completedTaskContainer"></div>
     </section>
 
   </main>
