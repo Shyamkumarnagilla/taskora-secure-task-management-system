@@ -186,6 +186,25 @@ form {
   box-shadow: none;
 }
 
+/* ✅ Inline Auth Messages */
+.auth-msg {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  display: none;
+}
+
+/* ✅ Success */
+.auth-msg.success {
+  color: green;
+}
+
+/* ✅ Error */
+.auth-msg.error {
+  color: red;
+}
+
 @media screen and (max-width: 650px) {
   .container {
     height: calc(100vh - 40px);
@@ -246,3 +265,4 @@ form {
     font-size: 30px;
   }
 }
+

@@ -657,18 +657,27 @@ body.dark .profile-menu {
   cursor: pointer;
 }
 
-/* ✅ Task Created Message */
+/* ✅ Task Message (Success + Error) */
 .task-success-msg {
   margin-top: 10px;
   font-size: 14px;
   font-weight: 600;
   text-align: center;
-  color: green;
   display: none;
 }
 
-/* ✅ PROGRESS VISUAL (BOX Y) */
+/* ✅ Success */
+.task-success-msg.success {
+  color: green;
+}
 
+/* ✅ Error */
+.task-success-msg.error {
+  color: red;
+}
+
+
+/* ✅ PROGRESS VISUAL (BOX Y) */
 .progress-container {
   display: flex;
   justify-content: center;

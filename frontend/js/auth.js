@@ -10,6 +10,20 @@ loginBtn.addEventListener("click", () => {
   container.classList.remove("active");
 });
 
+function showMessage(elementId, text, type) {
+  const msg = document.getElementById(elementId);
+
+  msg.classList.remove("success", "error");
+  msg.classList.add(type);
+
+  msg.innerText = text;
+  msg.style.display = "block";
+
+  setTimeout(() => {
+    msg.style.display = "none";
+  }, 3000);
+}
+
 // Register API integration
 document.getElementById("registerForm").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -27,10 +41,10 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
   });
 
   if (response.ok) {
-    alert("✅ Registration Successful!");
+    showMessage("registerMsg", " Registered Successfully! Please Login.", "success");
     container.classList.remove("active");
   } else {
-    alert("❌ Registration Failed!");
+    showMessage("registerMsg", " Registration Failed. Try Again.", "error");
   }
 });
 
@@ -57,11 +71,11 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     localStorage.setItem("taskora_email", data.email);
     window.location.href = "dashboard.html";
 
-    alert("✅ Login Successful!");
+    showMessage("loginMsg", " Login Successful! Redirecting...", "success");
 
     // ✅ Redirect to Dashboard
     window.location.href = "dashboard.html";
   } else {
-    alert("❌ Invalid Email or Password");
+    showMessage("loginMsg", " Invalid Email or Password", "error");
   }
 });

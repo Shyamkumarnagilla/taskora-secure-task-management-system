@@ -135,38 +135,56 @@ setupChips("priorityChips");
 document.getElementById("createTaskBtn").onclick = async () => {
   const title = document.getElementById("taskInput").value.trim();
 
-  // ✅ Validation: Task title must not be empty
+  const msg = document.getElementById("taskSuccessMsg");
+
+  // ✅ Reset previous message classes
+  msg.classList.remove("success", "error");
+
+  // ✅ Validation: Empty title
   if (!title) {
-    alert("⚠️ Please enter a task title!");
+    msg.innerText = "⚠️ Please enter a task title!";
+    msg.classList.add("error");
+    msg.style.display = "block";
+
+    setTimeout(() => {
+      msg.style.display = "none";
+    }, 3000);
+
     return;
   }
 
-  // ✅ Selected Day
+  // ✅ Selected Day + Priority
   const groupName =
     document.querySelector("#dayChips .chip.active")?.dataset.value;
 
-  // ✅ Selected Priority
   const priority =
     document.querySelector("#priorityChips .chip.active")?.dataset.value;
 
-  // ✅ Validation: Chips must be selected
+  // ✅ Validation: Chips not selected
   if (!groupName || !priority) {
-    alert("⚠️ Please select Day and Priority!");
+    msg.innerText = "⚠️ Please select Day and Priority!";
+    msg.classList.add("error");
+    msg.style.display = "block";
+
+    setTimeout(() => {
+      msg.style.display = "none";
+    }, 3000);
+
     return;
   }
 
-  // ✅ Task object to send backend
+  // ✅ Task object
   const newTask = {
-    title: title,
-    groupName: groupName,
+    title,
+    groupName,
     due: groupName,
-    priority: priority,
+    priority,
     pinned: false,
     done: false,
     userEmail: email,
   };
 
-  // ✅ Save Task in Backend/MySQL
+  // ✅ Save Task
   await fetch(API, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -176,17 +194,16 @@ document.getElementById("createTaskBtn").onclick = async () => {
   // ✅ Clear Input
   document.getElementById("taskInput").value = "";
 
-  // ✅ Show Success Message ONLY after successful creation
-  const msg = document.getElementById("taskSuccessMsg");
+  // ✅ Success Message
   msg.innerText = "✅ Task Created Successfully!";
+  msg.classList.add("success");
   msg.style.display = "block";
 
-  // ✅ Hide after 3 seconds
   setTimeout(() => {
     msg.style.display = "none";
   }, 3000);
 
-  // ✅ Reload tasks from DB
+  // ✅ Reload tasks
   loadTasks();
 };
 
