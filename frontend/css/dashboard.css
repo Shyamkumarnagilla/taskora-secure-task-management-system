@@ -10,7 +10,6 @@
   --violet: #7c3aed;
 }
 
-/* ✅ Dark Mode */
 body.dark {
   --bg: #181818;
   --card: #242424;
@@ -34,7 +33,7 @@ body {
   color: var(--text);
 }
 
-/* ✅ Sidebar */
+/* Sidebar */
 .sidebar {
   width: 240px;
   background: var(--card);
@@ -56,14 +55,13 @@ body {
   margin: 18px 0;
 }
 
-/* ✅ Sidebar Icons */
 .icon {
   font-size: 18px;
   margin-right: 12px;
   color: var(--text);
 }
 
-/* ✅ Menu */
+/* Menu */
 .menu a {
   display: flex;
   align-items: center;
@@ -79,7 +77,6 @@ body {
   color: var(--text);
 }
 
-/* ✅ Active Link */
 .menu a.active {
   background: var(--primary);
   font-weight: 700;
@@ -90,12 +87,10 @@ body {
   color: black;
 }
 
-/* ✅ Bottom Controls */
 .bottom-controls {
   margin-top: auto;
 }
 
-/* ✅ Smaller Mode Toggle + Move Up */
 .mode-toggle {
   display: flex;
   justify-content: space-between;
@@ -132,7 +127,6 @@ body {
   color: inherit;
 }
 
-/* ✅ Logout Violet */
 .logout-btn {
   width: 100%;
   padding: 12px;
@@ -144,7 +138,7 @@ body {
   cursor: pointer;
 }
 
-/* ✅ Main */
+/* Main */
 .main {
   flex: 1;
   margin: 20px;
@@ -155,7 +149,6 @@ body {
   position: relative;
 }
 
-/* ✅ Topbar */
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -171,14 +164,12 @@ body {
   color: var(--text);
 }
 
-/* ✅ Profile Actions */
 .actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-/* ✅ Profile Icon Violet */
 .profile-icon {
   width: 40px;
   height: 40px;
@@ -192,7 +183,6 @@ body {
   cursor: pointer;
 }
 
-/* ✅ Profile Menu */
 .profile-menu {
   position: absolute;
   top: 80px;
@@ -216,15 +206,12 @@ body.dark .profile-menu {
   font-size: 13px;
   color: var(--muted);
   margin-bottom: 6px;
-
-  /* ✅ Prevent overflow */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
 }
 
-/* ✅ Avatar */
 .avatar {
   width: 60px;
   height: 60px;
@@ -237,7 +224,7 @@ body.dark .profile-menu {
   align-items: center;
 }
 
-/* ✅ Sections */
+/* Sections */
 .page-section {
   display: none;
   margin-top: 30px;
@@ -247,405 +234,7 @@ body.dark .profile-menu {
   display: block;
 }
 
-/* ✅ Calendar Header */
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 12px 0;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.cal-btn {
-  border: none;
-  background: var(--card);
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  color: var(--text);
-}
-
-/* ✅ Days Row */
-.calendar-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  text-align: center;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-
-/* ✅ Dates Grid */
-.calendar-dates {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  text-align: center;
-}
-
-.calendar-dates span {
-  padding: 6px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 12px;
-  color: var(--text);
-  transition: 0.2s;
-}
-
-.calendar-dates span:hover {
-  background: var(--violet);
-  color: black;
-}
-
-/* ✅ Highlight Today */
-.today-date {
-  background: var(--primary);
-  color: white !important;
-  font-weight: 700;
-}
-
-.chip.active {
-  background: var(--primary);
-  border: none;
-  color: black;
-}
-
-/* ✅ Create Button */
-.create-task-btn {
-  align-self: flex-end;
-  padding: 10px 18px;
-  border-radius: 14px;
-  border: none;
-  background: var(--primary);
-  font-weight: 700;
-  cursor: pointer;
-}
-
-/* ✅ Task Cards */
-.task-group-card {
-  margin-top: 40px;
-  background: var(--bg);
-  padding: 20px;
-  border-radius: 18px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-}
-
-/* ✅ Header Row (Status Removed) */
-.task-header {
-  display: grid;
-  grid-template-columns: 0.4fr 2fr 1.2fr 1.4fr 2fr;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--muted);
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
-}
-
-/* ✅ Center headings except group label */
-.task-header span:nth-child(3),
-.task-header span:nth-child(4),
-.task-header span:nth-child(5) {
-  text-align: center;
-}
-
-/* ✅ Group Title */
-.group-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text);
-  text-align: left;
-}
-
-/* ✅ Task Row (Status Removed) */
-.task-row {
-  display: grid;
-  grid-template-columns: 0.4fr 2fr 1.2fr 1.4fr 2fr;
-  align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-/* ✅ Hollow Star Toggle */
-.task-check {
-  font-size: 18px;
-  cursor: pointer;
-  color: var(--muted); /* Only outline visible */
-  transition: 0.2s;
-}
-
-/* ✅ When Clicked → Filled Green Star */
-.task-check.checked {
-  color: var(--primary);
-}
-
-/* ✅ Title */
-.task-title {
-  font-weight: 600;
-}
-
-/* ✅ Pills */
-.task-pill {
-  font-size: 12px;
-  padding: 6px 14px;
-  border-radius: 25px;
-  font-weight: 600;
-  text-align: center;
-}
-
-/* ✅ Due Date Matches Pill Font */
-.due-pill {
-  background: transparent;
-  padding: 0;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-/* ✅ Priority Colors */
-.priority-high {
-  background: #ff7675;
-  color: white;
-}
-
-.priority-medium {
-  background: #fdcb6e;
-}
-
-.priority-low {
-  background: #55efc4;
-}
-
-/* ✅ Actions */
-.task-actions {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-}
-
-.done-btn {
-  padding: 7px 16px;
-  border-radius: 12px;
-  background: #00b894;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.delete-btn {
-  padding: 7px 16px;
-  border-radius: 12px;
-  background: #d63031;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-/* ✅ COMPLETED TASKS SUMMARY SECTION */
-.completed-group-card {
-  margin-top: 20px;
-  background: var(--bg);
-  padding: 18px;
-  border-radius: 18px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.completed-group-card ul {
-  padding-left: 20px;
-}
-
-.completed-group-card li {
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: var(--text);
-}
-
-/* ================================================= */
-/* ✅ FINAL SIMPLE DASHBOARD STRUCTURE (NO SCROLL)   */
-/* ================================================= */
-
-#dashboardSection {
-  height: calc(96vh - 140px);
-}
-
-/* ✅ Wrapper = 2 Parts */
-.dashboard-wrapper {
-  display: flex;
-  gap: 18px;
-  height: 100%;
-}
-
-.dash-box h3 {
-  text-align: center;
-}
-
-/* ✅ PART 1 */
-.part1 {
-  width: 70%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-/* ✅ A = 35% Height */
-.box-a {
-  height: 35%;
-}
-
-/* ✅ Bottom of Part1 = Remaining */
-.part1-bottom {
-  flex: 1;
-  display: flex;
-  gap: 18px;
-}
-
-/* ✅ B = 65% Width */
-.box-b {
-  width: 60%;
-}
-
-/* ✅ C = Remaining 35% */
-.box-c {
-  width: 40%;
-  overflow-y: auto;
-}
-
-/* ✅ PART 2 */
-.part2 {
-  width: 30%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-/* ✅ Y Same Height as Box A */
-.box-y {
-  height: 35%;
-  overflow-y: auto;
-}
-
-/* ✅ X Fills Remaining Space */
-.box-x {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ✅ Calendar Expands */
-.calendar-dates {
-  flex-grow: 1;
-}
-
-/* ✅ Common Card Style */
-.dash-box {
-  background: var(--bg);
-  padding: 18px;
-  border-radius: 18px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-}
-
-/* ✅ Stats Layout */
-.stats-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-
-.stat-box {
-  flex: 1;
-  margin: 0 8px;
-  background: var(--card);
-  padding: 16px;
-  border-radius: 16px;
-  text-align: center;
-}
-
-.stat-box h1 {
-  font-size: 30px;
-  margin-top: 6px;
-  color: var(--primary);
-}
-
-/* ✅ Lists */
-.box-c ul {
-  margin-top: 12px;
-  padding-left: 18px;
-}
-
-.box-c li {
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-
-/* ✅ BOX B CHIP STYLE OPTIONS */
-
-.box-b {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-/* ✅ Textarea */
-#taskInput {
-  width: 100%;
-  height: 90px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  padding: 12px;
-  resize: none;
-  font-size: 14px;
-  background: var(--card);
-  color: var(--text);
-  margin-top: 10px;
-}
-
-/* ✅ Chip Row */
-.chip-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 18px;
-  padding: 0 30px 0 30px;
-}
-
-/* ✅ Label */
-.chip-label {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-/* ✅ Chip Group */
-.chip-group {
-  display: flex;
-  gap: 10px;
-}
-
-/* ✅ Chips */
-.chip {
-  padding: 6px 14px;
-  border-radius: 18px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  font-size: 13px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s;
-  color: var(--text);
-}
-
-/* ✅ Active Chip */
-.chip.active {
-  background: var(--primary);
-  border: none;
-  color: black;
-}
-
-/* ✅ Bottom Button */
+/* Bottom Button */
 .create-task-btn {
   margin-top: 15px;
   width: 100%;
@@ -657,7 +246,6 @@ body.dark .profile-menu {
   cursor: pointer;
 }
 
-/* ✅ Task Message (Success + Error) */
 .task-success-msg {
   margin-top: 10px;
   font-size: 14px;
@@ -666,18 +254,16 @@ body.dark .profile-menu {
   display: none;
 }
 
-/* ✅ Success */
 .task-success-msg.success {
   color: green;
 }
 
-/* ✅ Error */
 .task-success-msg.error {
   color: red;
 }
 
 
-/* ✅ PROGRESS VISUAL (BOX Y) */
+/* PROGRESS */
 .progress-container {
   display: flex;
   justify-content: center;
@@ -705,7 +291,6 @@ body.dark .profile-menu {
   color: var(--text);
 }
 
-/* ✅ Inner Circle Effect */
 .progress-ring::before {
   content: "";
   position: absolute;
@@ -716,4 +301,363 @@ body.dark .profile-menu {
 }
 .progress-ring span {
   position: relative;
+}
+
+/* Calendar */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.cal-btn {
+  border: none;
+  background: var(--card);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.calendar-dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  text-align: center;
+}
+
+.calendar-dates span {
+  padding: 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text);
+  transition: 0.2s;
+}
+
+.calendar-dates span:hover {
+  background: var(--violet);
+  color: black;
+}
+
+.today-date {
+  background: var(--primary);
+  color: white !important;
+  font-weight: 700;
+}
+
+.chip.active {
+  background: var(--primary);
+  border: none;
+  color: black;
+}
+
+.create-task-btn {
+  align-self: flex-end;
+  padding: 10px 18px;
+  border-radius: 14px;
+  border: none;
+  background: var(--primary);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Task Cards */
+.task-group-card {
+  margin-top: 40px;
+  background: var(--bg);
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.task-header {
+  display: grid;
+  grid-template-columns: 0.4fr 2fr 1.2fr 1.4fr 2fr;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--muted);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.task-header span:nth-child(3),
+.task-header span:nth-child(4),
+.task-header span:nth-child(5) {
+  text-align: center;
+}
+
+.group-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: left;
+}
+
+.task-row {
+  display: grid;
+  grid-template-columns: 0.4fr 2fr 1.2fr 1.4fr 2fr;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.task-check {
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--muted); /* Only outline visible */
+  transition: 0.2s;
+}
+
+.task-check.checked {
+  color: var(--primary);
+}
+
+.task-title {
+  font-weight: 600;
+}
+
+.task-pill {
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.due-pill {
+  background: transparent;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.priority-high {
+  background: #ff7675;
+  color: white;
+}
+
+.priority-medium {
+  background: #fdcb6e;
+}
+
+.priority-low {
+  background: #55efc4;
+}
+
+.task-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.done-btn {
+  padding: 7px 16px;
+  border-radius: 12px;
+  background: #00b894;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-btn {
+  padding: 7px 16px;
+  border-radius: 12px;
+  background: #d63031;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* COMPLETED TASKS */
+.completed-group-card {
+  margin-top: 20px;
+  background: var(--bg);
+  padding: 18px;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.completed-group-card ul {
+  padding-left: 20px;
+}
+
+.completed-group-card li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* DASHBOARD SECTION LAYOUT */
+#dashboardSection {
+  height: calc(96vh - 140px);
+}
+
+.dashboard-wrapper {
+  display: flex;
+  gap: 18px;
+  height: 100%;
+}
+
+.dash-box h3 {
+  text-align: center;
+}
+
+.part1 {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.box-a {
+  height: 35%;
+}
+
+.part1-bottom {
+  flex: 1;
+  display: flex;
+  gap: 18px;
+}
+
+.box-b {
+  width: 60%;
+}
+
+.box-c {
+  width: 40%;
+  overflow-y: auto;
+}
+
+.part2 {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.box-y {
+  height: 35%;
+  overflow-y: auto;
+}
+
+.box-x {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-dates {
+  flex-grow: 1;
+}
+
+.dash-box {
+  background: var(--bg);
+  padding: 18px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.stat-box {
+  flex: 1;
+  margin: 0 8px;
+  background: var(--card);
+  padding: 16px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.stat-box h1 {
+  font-size: 30px;
+  margin-top: 6px;
+  color: var(--primary);
+}
+
+.box-c ul {
+  margin-top: 12px;
+  padding-left: 18px;
+}
+
+.box-c li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.box-b {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#taskInput {
+  width: 100%;
+  height: 90px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  padding: 12px;
+  resize: none;
+  font-size: 14px;
+  background: var(--card);
+  color: var(--text);
+  margin-top: 10px;
+}
+
+.chip-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  padding: 0 30px 0 30px;
+}
+
+.chip-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.chip-group {
+  display: flex;
+  gap: 10px;
+}
+
+.chip {
+  padding: 6px 14px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+  color: var(--text);
+}
+
+.chip.active {
+  background: var(--primary);
+  border: none;
+  color: black;
 }

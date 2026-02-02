@@ -186,7 +186,6 @@ form {
   box-shadow: none;
 }
 
-/* ✅ Inline Auth Messages */
 .auth-msg {
   margin-top: 10px;
   font-size: 14px;
@@ -195,12 +194,10 @@ form {
   display: none;
 }
 
-/* ✅ Success */
 .auth-msg.success {
   color: green;
 }
 
-/* ✅ Error */
 .auth-msg.error {
   color: red;
 }

@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Taskora Dashboard</title>
 
-  <!-- ✅ Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <link rel="stylesheet" href="css/dashboard.css" />
@@ -14,7 +13,7 @@
 
 <body>
 
-  <!-- ✅ Sidebar -->
+  <!-- Sidebar -->
   <aside class="sidebar">
 
     <div class="brand">
@@ -23,7 +22,7 @@
 
     <div class="divider"></div>
 
-    <!-- ✅ Menu -->
+    <!-- Menu -->
     <nav class="menu">
       <a href="#" class="nav-link active" data-section="dashboard">
         <i class="fa-solid fa-house icon"></i>
@@ -36,10 +35,10 @@
       </a>
     </nav>
 
-    <!-- ✅ Bottom Controls -->
+    <!-- Bottom Controls -->
     <div class="bottom-controls">
 
-      <!-- ✅ Mode Toggle -->
+      <!-- Mode Toggle -->
       <div class="mode-toggle">
         <span id="lightMode" class="active">
           <i class="fa-solid fa-sun toggle-icon"></i> Light
@@ -50,7 +49,7 @@
         </span>
       </div>
 
-      <!-- ✅ Logout Button -->
+      <!-- Logout Button -->
       <button id="logoutBtn" class="logout-btn">
         <i class="fa-solid fa-right-from-bracket"></i> Logout
       </button>
@@ -59,36 +58,34 @@
   </aside>
 
 
-  <!-- ✅ Main -->
+  <!-- Main -->
   <main class="main">
 
-    <!-- ✅ Topbar -->
+    <!-- Topbar -->
     <header class="topbar">
       <input id="searchBox" class="search-box" placeholder="Search tasks..." />
 
-      <!-- ✅ Only Profile Icon -->
+      <!-- Only Profile Icon -->
       <div class="actions">
         <div id="profileIcon" class="profile-icon">S</div>
       </div>
     </header>
 
-    <!-- ✅ Profile Dropdown -->
+    <!-- Profile Dropdown -->
     <div id="profileMenu" class="profile-menu">
       <p id="menuEmail" class="profile-email"></p>
       <div class="avatar" id="profileAvatar">S</div>
       <p id="profileGreeting"></p>
     </div>
 
-    <!-- ✅ Sections -->
+    <!-- Sections -->
 
     <section id="dashboardSection" class="page-section active-section">
 
       <div class="dashboard-wrapper">
 
-        <!-- ✅ PART 1 (70%) -->
         <div class="part1">
 
-          <!-- ✅ A: Tasks Overview -->
           <div class="dash-box box-a">
 
             <h3>Tasks Overview</h3>
@@ -112,18 +109,14 @@
 
           </div>
 
-          <!-- ✅ Bottom of Part1 -->
           <div class="part1-bottom">
 
-            <!-- ✅ B: New Task Panel -->
             <div class="dash-box box-b">
 
               <h3>New Task</h3>
 
-              <!-- ✅ Task Input -->
               <textarea id="taskInput" placeholder="Write your task here..."></textarea>
 
-              <!-- ✅ Day Chips -->
               <div class="chip-row">
                 <span class="chip-label">Day</span>
 
@@ -134,7 +127,6 @@
                 </div>
               </div>
 
-              <!-- ✅ Priority Chips -->
               <div class="chip-row">
                 <span class="chip-label">Priority</span>
 
@@ -145,18 +137,15 @@
                 </div>
               </div>
 
-              <!-- ✅ Button Fixed Bottom -->
               <button class="create-task-btn" id="createTaskBtn">
                 + Create Task
               </button>
 
-              <!-- ✅ Success Message -->
               <p id="taskSuccessMsg" class="task-success-msg"></p>
 
             </div>
 
 
-            <!-- ✅ C: Week Plan -->
             <div class="dash-box box-c">
               <h3>Week Plan</h3>
               <ul id="weekTasksList"></ul>
@@ -167,14 +156,11 @@
         </div>
 
 
-        <!-- ✅ PART 2 (30%) -->
         <div class="part2">
 
-          <!-- ✅ Y: Completed Tasks -->
           <div class="dash-box box-y">
             <h3>Progress</h3>
 
-            <!-- ✅ Progress Ring -->
             <div class="progress-container">
               <div class="progress-ring" id="progressRing">
                 <span id="progressPercent">0%</span>
@@ -184,7 +170,6 @@
           </div>
 
 
-          <!-- ✅ X: Calendar -->
           <div class="dash-box box-x">
 
             <h3>Calendar</h3>
@@ -210,14 +195,12 @@
 
     </section>
 
-    <!-- ✅ My Tasks Section -->
+    <!-- My Tasks Section -->
     <section id="mytasksSection" class="page-section">
       <h2>My Tasks</h2>
 
-      <!-- ✅ Only 3 Cards -->
       <div id="taskContainer"></div>
 
-      <!-- ✅ Completed Tasks Summary -->
       <h2 style="margin-top:40px;">Completed Tasks</h2>
       <div id="completedTaskContainer"></div>
     </section>

@@ -20,7 +20,7 @@ public class UserService {
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    // ✅ Register
+    // Register
     public UserResponse registerUser(RegisterRequest request) {
 
         User user = User.builder()
@@ -40,7 +40,7 @@ public class UserService {
                 .build();
     }
 
-    // ✅ Login
+    // Login
     public LoginResponse loginUser(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())

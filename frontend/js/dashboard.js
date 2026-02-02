@@ -1,7 +1,3 @@
-/******************************************************
- ✅ TASKORA DASHBOARD (FULL BACKEND CONNECTED VERSION)
-*******************************************************/
-
 const email = localStorage.getItem("taskora_email");
 const token = localStorage.getItem("taskora_token");
 
@@ -9,24 +5,20 @@ if (!email || !token) window.location.href = "index.html";
 
 const API = "http://localhost:8081/tasks";
 
-/* ✅ PROFILE DROPDOWN */
 const profileIcon = document.getElementById("profileIcon");
 const profileMenu = document.getElementById("profileMenu");
 
-// ✅ Show Email in Profile Menu
+// Show Email in Profile Menu
 document.getElementById("menuEmail").innerText = email;
 
-// ✅ Load Username from Backend and Display Greeting
 async function loadUserProfile() {
   try {
     const res = await fetch(`http://localhost:8081/users/${email}`);
     const user = await res.json();
 
-    // ✅ Greeting uses registered name
     document.getElementById("profileGreeting").innerText =
       "Hi, " + user.name + "!";
 
-    // ✅ Avatar uses first letter of username
     profileIcon.innerText = user.name.charAt(0).toUpperCase();
     document.getElementById("profileAvatar").innerText =
       user.name.charAt(0).toUpperCase();
@@ -34,12 +26,11 @@ async function loadUserProfile() {
   } catch (err) {
     console.error("User profile load failed:", err);
 
-    // ✅ Fallback if API fails
     document.getElementById("profileGreeting").innerText = "Hi, User!";
   }
 }
 
-// ✅ Call Once When Dashboard Loads
+// Call Once When Dashboard Loads
 loadUserProfile();
 
 profileIcon.onclick = () => {
@@ -47,13 +38,13 @@ profileIcon.onclick = () => {
     profileMenu.style.display === "block" ? "none" : "block";
 };
 
-/* ✅ LOGOUT */
+/* LOGOUT */
 document.getElementById("logoutBtn").onclick = () => {
   localStorage.clear();
   window.location.href = "index.html";
 };
 
-/* ✅ DARK MODE TOGGLE */
+/* DARK MODE TOGGLE */
 const lightBtn = document.getElementById("lightMode");
 const darkBtn = document.getElementById("darkMode");
 
@@ -72,7 +63,8 @@ function setMode(mode) {
   }
 }
 
-/* ✅ SIDEBAR NAVIGATION */
+// NAVIGATION LOGIC
+
 const links = document.querySelectorAll(".nav-link");
 
 const sections = {
@@ -93,16 +85,17 @@ links.forEach((link) => {
   };
 });
 
-/******************************************************
- ✅ TASKS STORAGE (FROM MYSQL)
-*******************************************************/
-let tasks = [];
+// TASK MANAGEMENT LOGIC
 
-/* ✅ LOAD TASKS FROM BACKEND */
+let allTasks = [];
+let filteredTasks = [];
+
 async function loadTasks() {
   try {
     const res = await fetch(`${API}/${email}`);
-    tasks = await res.json();
+    allTasks = await res.json();
+
+    filteredTasks = [...allTasks];
 
     renderTasks();
     renderCompletedSummary();
@@ -112,9 +105,7 @@ async function loadTasks() {
   }
 }
 
-/******************************************************
- ✅ CHIP SELECTION HANDLER
-*******************************************************/
+// CHIP SELECTION LOGIC
 function setupChips(groupId) {
   const chips = document.querySelectorAll(`#${groupId} .chip`);
 
@@ -129,20 +120,16 @@ function setupChips(groupId) {
 setupChips("dayChips");
 setupChips("priorityChips");
 
-/******************************************************
- ✅ CREATE TASK (SAVE TO MYSQL)
-*******************************************************/
+// CREATE TASK LOGIC
 document.getElementById("createTaskBtn").onclick = async () => {
   const title = document.getElementById("taskInput").value.trim();
 
   const msg = document.getElementById("taskSuccessMsg");
 
-  // ✅ Reset previous message classes
   msg.classList.remove("success", "error");
 
-  // ✅ Validation: Empty title
   if (!title) {
-    msg.innerText = "⚠️ Please enter a task title!";
+    msg.innerText = "Please enter a task title!";
     msg.classList.add("error");
     msg.style.display = "block";
 
@@ -153,16 +140,14 @@ document.getElementById("createTaskBtn").onclick = async () => {
     return;
   }
 
-  // ✅ Selected Day + Priority
   const groupName =
     document.querySelector("#dayChips .chip.active")?.dataset.value;
 
   const priority =
     document.querySelector("#priorityChips .chip.active")?.dataset.value;
 
-  // ✅ Validation: Chips not selected
   if (!groupName || !priority) {
-    msg.innerText = "⚠️ Please select Day and Priority!";
+    msg.innerText = "Please select Day and Priority!";
     msg.classList.add("error");
     msg.style.display = "block";
 
@@ -173,7 +158,6 @@ document.getElementById("createTaskBtn").onclick = async () => {
     return;
   }
 
-  // ✅ Task object
   const newTask = {
     title,
     groupName,
@@ -184,18 +168,15 @@ document.getElementById("createTaskBtn").onclick = async () => {
     userEmail: email,
   };
 
-  // ✅ Save Task
   await fetch(API, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newTask),
   });
 
-  // ✅ Clear Input
   document.getElementById("taskInput").value = "";
 
-  // ✅ Success Message
-  msg.innerText = "✅ Task Created Successfully!";
+  msg.innerText = "Task Created Successfully!";
   msg.classList.add("success");
   msg.style.display = "block";
 
@@ -203,13 +184,12 @@ document.getElementById("createTaskBtn").onclick = async () => {
     msg.style.display = "none";
   }, 3000);
 
-  // ✅ Reload tasks
   loadTasks();
 };
 
-/******************************************************
- ✅ RENDER TASKS (MY TASKS SECTION)
-*******************************************************/
+
+//  RENDER TASKS (MY TASKS SECTION)
+
 function renderTasks() {
   const container = document.getElementById("taskContainer");
   container.innerHTML = "";
@@ -217,11 +197,11 @@ function renderTasks() {
   const groups = ["Today", "Tomorrow", "This Week"];
 
   groups.forEach((grp) => {
-    let groupTasks = tasks.filter(
+    let groupTasks = filteredTasks.filter(
       (t) => t.groupName === grp && !t.done
     );
 
-    // ✅ Pinned tasks first
+    // Pinned tasks first
     groupTasks.sort((a, b) => b.pinned - a.pinned);
 
     let html = `
@@ -246,7 +226,7 @@ function renderTasks() {
       html += `
         <div class="task-row">
 
-          <!-- ✅ Pin Star -->
+          <!--  Pin Star -->
           <i
             class="${task.pinned
           ? "fa-solid fa-star checked"
@@ -282,44 +262,36 @@ function renderTasks() {
   });
 }
 
-/******************************************************
- ✅ PIN TASK (BACKEND)
-*******************************************************/
+
 async function togglePin(id) {
   await fetch(`${API}/${id}/pin`, { method: "PUT" });
   loadTasks();
 }
 
-/******************************************************
- ✅ MARK TASK DONE (BACKEND)
-*******************************************************/
+
 async function markTaskDone(id) {
   await fetch(`${API}/${id}/complete`, { method: "PUT" });
   loadTasks();
 }
 
-/******************************************************
- ✅ DELETE TASK (BACKEND)
-*******************************************************/
+
 async function deleteTask(id) {
   await fetch(`${API}/${id}`, { method: "DELETE" });
   loadTasks();
 }
 
-/******************************************************
- ✅ COMPLETED TASKS SUMMARY
-*******************************************************/
+//  COMPLETED TASKS SUMMARY
 function renderCompletedSummary() {
   const container = document.getElementById("completedTaskContainer");
   container.innerHTML = "";
 
-  let completedTasks = tasks.filter((t) => t.done);
+  let completedTasks = filteredTasks.filter((t) => t.done);
 
   if (completedTasks.length === 0) {
     container.innerHTML = `
       <div class="completed-group-card">
         <p style="text-align:center; color:var(--muted);">
-          No tasks completed yet ✅
+          No tasks completed yet
         </p>
       </div>
     `;
@@ -336,19 +308,16 @@ function renderCompletedSummary() {
   container.innerHTML = html;
 }
 
-/******************************************************
- ✅ DASHBOARD STATS + PROGRESS + WEEK PLAN
-*******************************************************/
+//  DASHBOARD STATS
 function updateDashboardData() {
-  let total = tasks.length;
-  let completed = tasks.filter((t) => t.done).length;
+  let total = allTasks.length;
+  let completed = allTasks.filter((t) => t.done).length;
   let pending = total - completed;
 
   document.getElementById("totalTasks").innerText = total;
   document.getElementById("completedTasks").innerText = completed;
   document.getElementById("pendingTasks").innerText = pending;
 
-  // ✅ Progress %
   let percent = total === 0 ? 0 : Math.round((completed / total) * 100);
 
   document.getElementById("progressPercent").innerText = percent + "%";
@@ -359,32 +328,36 @@ function updateDashboardData() {
     var(--border) 0deg
   )`;
 
-  // ✅ Week Plan List
   const weekList = document.getElementById("weekTasksList");
   weekList.innerHTML = "";
 
-  tasks.filter((t) => !t.done).forEach((task) => {
+  allTasks.filter((t) => !t.done).forEach((task) => {
     let li = document.createElement("li");
     li.innerText = task.title;
     weekList.appendChild(li);
   });
 }
 
-/******************************************************
- ✅ MAKE FUNCTIONS GLOBAL FOR BUTTONS
-*******************************************************/
 window.togglePin = togglePin;
 window.markTaskDone = markTaskDone;
 window.deleteTask = deleteTask;
 
-/******************************************************
- ✅ INITIAL LOAD
-*******************************************************/
+const searchBox = document.getElementById("searchBox");
+
+searchBox.addEventListener("input", () => {
+  const query = searchBox.value.toLowerCase();
+
+  filteredTasks = allTasks.filter((task) =>
+    task.title.toLowerCase().includes(query)
+  );
+
+  renderTasks();
+  renderCompletedSummary();
+});
+
 loadTasks();
 
-/******************************************************
- ✅ CALENDAR (UNCHANGED)
-*******************************************************/
+// CALENDAR WIDGET
 const monthYearText = document.getElementById("calendarMonthYear");
 const datesGrid = document.getElementById("calendarDates");
 

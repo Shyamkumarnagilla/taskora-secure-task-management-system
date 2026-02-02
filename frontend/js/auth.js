@@ -66,14 +66,12 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   if (response.ok) {
     const data = await response.json();
 
-    // ✅ Store JWT token
     localStorage.setItem("taskora_token", data.token);
     localStorage.setItem("taskora_email", data.email);
     window.location.href = "dashboard.html";
 
     showMessage("loginMsg", " Login Successful! Redirecting...", "success");
 
-    // ✅ Redirect to Dashboard
     window.location.href = "dashboard.html";
   } else {
     showMessage("loginMsg", " Invalid Email or Password", "error");
