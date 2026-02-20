@@ -32,7 +32,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
   const email = document.getElementById("regEmail").value;
   const password = document.getElementById("regPassword").value;
 
-  const response = await fetch("http://localhost:8081/auth/register", {
+  const response = await fetch("/auth/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -55,7 +55,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   const email = document.getElementById("loginEmail").value;
   const password = document.getElementById("loginPassword").value;
 
-  const response = await fetch("http://localhost:8081/auth/login", {
+  const response = await fetch("/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

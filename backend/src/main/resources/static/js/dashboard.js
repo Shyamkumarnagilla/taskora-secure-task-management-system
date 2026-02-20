@@ -3,7 +3,7 @@ const token = localStorage.getItem("taskora_token");
 
 if (!email || !token) window.location.href = "index.html";
 
-const API = "http://localhost:8081/tasks";
+const API = "/tasks";
 
 const profileIcon = document.getElementById("profileIcon");
 const profileMenu = document.getElementById("profileMenu");
@@ -13,7 +13,7 @@ document.getElementById("menuEmail").innerText = email;
 
 async function loadUserProfile() {
   try {
-    const res = await fetch(`http://localhost:8081/users/${email}`);
+    const res = await fetch(`/users/${email}`);
     const user = await res.json();
 
     document.getElementById("profileGreeting").innerText =
